@@ -5,7 +5,7 @@ var page = require('webpage').create(),
 
 if (system.args.length === 1) {
     console.log('Usage: netlog.js <some URL>');
-    phantom.exit(1);
+    chromess.exit(1);
 } else {
     address = system.args[1];
 
@@ -21,6 +21,6 @@ if (system.args.length === 1) {
         if (status !== 'success') {
             console.log('FAIL to load the address');
         }
-        phantom.exit();
+        chromess.exit();
     });
 }

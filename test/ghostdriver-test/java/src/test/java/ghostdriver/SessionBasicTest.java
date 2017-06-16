@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 public class SessionBasicTest extends BaseTest {
 
     @Test(expected = SessionNotFoundException.class)
-    public void quitShouldTerminatePhantomJSProcess() throws MalformedURLException {
+    public void quitShouldTerminatechromessJSProcess() throws MalformedURLException {
         // Get Driver Instance
         WebDriver d = getDriver();
         d.navigate().to("about:blank");
@@ -27,7 +27,7 @@ public class SessionBasicTest extends BaseTest {
     }
 
     @Test(expected = NoSuchWindowException.class)
-    public void closeShouldNotTerminatePhantomJSProcess() throws MalformedURLException {
+    public void closeShouldNotTerminatechromessJSProcess() throws MalformedURLException {
         // By default, 1 window is created when Driver is launched
         WebDriver d = getDriver();
         assertEquals(1, d.getWindowHandles().size());

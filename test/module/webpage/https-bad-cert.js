@@ -1,7 +1,7 @@
 //! no-snakeoil
 async_test(function () {
     // This loads the same page as https-good-cert.js, but does not
-    // tell PhantomJS to trust the snakeoil certificate that the test
+    // tell chromessJS to trust the snakeoil certificate that the test
     // HTTPS server uses, so it should fail.
 
     var page = require('webpage').create();

@@ -24,7 +24,7 @@ function waitFor(testFx, onReady, timeOutMillis) {
                 if(!condition) {
                     // If condition still not fulfilled (timeout but condition is 'false')
                     console.log("'waitFor()' timeout");
-                    phantom.exit(1);
+                    chromess.exit(1);
                 } else {
                     // Condition fulfilled (timeout and/or condition is 'true')
                     console.log("'waitFor()' finished in " + (new Date().getTime() - start) + "ms.");
@@ -52,7 +52,7 @@ page.open("http://twitter.com/#!/sencha", function (status) {
             });
         }, function() {
            console.log("The sign-in dialog should be visible now.");
-           phantom.exit();
+           chromess.exit();
         });
     }
 });

@@ -2,7 +2,7 @@ var content;
 setup(function () {
     var fs = require('fs');
     // libraryPath is test/module/webpage
-    content = fs.read(fs.join(phantom.libraryPath,
+    content = fs.read(fs.join(chromess.libraryPath,
                               "../../www/hello.html"));
 });
 

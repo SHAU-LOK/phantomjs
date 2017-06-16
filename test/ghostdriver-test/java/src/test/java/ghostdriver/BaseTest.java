@@ -33,8 +33,8 @@ import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.chromessjs.chromessJSDriver;
+import org.openqa.selenium.chromessjs.chromessJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -56,7 +56,7 @@ public abstract class BaseTest {
     private static final String CONFIG_FILE        = "../config.ini";
     private static final String DRIVER_FIREFOX     = "firefox";
     private static final String DRIVER_CHROME      = "chrome";
-    private static final String DRIVER_PHANTOMJS   = "phantomjs";
+    private static final String DRIVER_chromessJS   = "chromessjs";
 
     protected static Properties sConfig;
     protected static DesiredCapabilities sCaps;
@@ -81,27 +81,27 @@ public abstract class BaseTest {
         sCaps.setJavascriptEnabled(true);
         sCaps.setCapability("takesScreenshot", false);
 
-        String driver = sConfig.getProperty("driver", DRIVER_PHANTOMJS);
+        String driver = sConfig.getProperty("driver", DRIVER_chromessJS);
 
-        // Fetch PhantomJS-specific configuration parameters
-        if (driver.equals(DRIVER_PHANTOMJS)) {
-            // "phantomjs_exec_path"
-            if (sConfig.getProperty("phantomjs_exec_path") != null) {
-                sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, sConfig.getProperty("phantomjs_exec_path"));
+        // Fetch chromessJS-specific configuration parameters
+        if (driver.equals(DRIVER_chromessJS)) {
+            // "chromessjs_exec_path"
+            if (sConfig.getProperty("chromessjs_exec_path") != null) {
+                sCaps.setCapability(chromessJSDriverService.chromessJS_EXECUTABLE_PATH_PROPERTY, sConfig.getProperty("chromessjs_exec_path"));
             } else {
-                throw new IOException(String.format("Property '%s' not set!", PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY));
+                throw new IOException(String.format("Property '%s' not set!", chromessJSDriverService.chromessJS_EXECUTABLE_PATH_PROPERTY));
             }
-            // "phantomjs_driver_path"
-            if (sConfig.getProperty("phantomjs_driver_path") != null) {
+            // "chromessjs_driver_path"
+            if (sConfig.getProperty("chromessjs_driver_path") != null) {
                 System.out.println("Test will use an external GhostDriver");
-                sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_GHOSTDRIVER_PATH_PROPERTY, sConfig.getProperty("phantomjs_driver_path"));
+                sCaps.setCapability(chromessJSDriverService.chromessJS_GHOSTDRIVER_PATH_PROPERTY, sConfig.getProperty("chromessjs_driver_path"));
             } else {
-                System.out.println("Test will use PhantomJS internal GhostDriver");
+                System.out.println("Test will use chromessJS internal GhostDriver");
             }
         }
 
-        // Disable "web-security", enable all possible "ssl-protocols" and "ignore-ssl-errors" for PhantomJSDriver
-//        sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, new String[] {
+        // Disable "web-security", enable all possible "ssl-protocols" and "ignore-ssl-errors" for chromessJSDriver
+//        sCaps.setCapability(chromessJSDriverService.chromessJS_CLI_ARGS, new String[] {
 //            "--web-security=false",
 //            "--ssl-protocol=any",
 //            "--ignore-ssl-errors=true"
@@ -110,30 +110,30 @@ public abstract class BaseTest {
         cliArgsCap.add("--web-security=false");
         cliArgsCap.add("--ssl-protocol=any");
         cliArgsCap.add("--ignore-ssl-errors=true");
-        sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, cliArgsCap);
+        sCaps.setCapability(chromessJSDriverService.chromessJS_CLI_ARGS, cliArgsCap);
 
         // Control LogLevel for GhostDriver, via CLI arguments
-        sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_GHOSTDRIVER_CLI_ARGS, new String[] {
-            "--logLevel=" + (sConfig.getProperty("phantomjs_driver_loglevel") != null ? sConfig.getProperty("phantomjs_driver_loglevel") : "INFO")
+        sCaps.setCapability(chromessJSDriverService.chromessJS_GHOSTDRIVER_CLI_ARGS, new String[] {
+            "--logLevel=" + (sConfig.getProperty("chromessjs_driver_loglevel") != null ? sConfig.getProperty("chromessjs_driver_loglevel") : "INFO")
         });
     }
 
     @Before
     public void prepareDriver() throws Exception
     {
-        // Which driver to use? (default "phantomjs")
-        String driver = sConfig.getProperty("driver", DRIVER_PHANTOMJS);
+        // Which driver to use? (default "chromessjs")
+        String driver = sConfig.getProperty("driver", DRIVER_chromessJS);
 
         // Start appropriate Driver
         if (isUrl(driver)) {
-            sCaps.setBrowserName("phantomjs");
+            sCaps.setBrowserName("chromessjs");
             mDriver = new RemoteWebDriver(new URL(driver), sCaps);
         } else if (driver.equals(DRIVER_FIREFOX)) {
             mDriver = new FirefoxDriver(sCaps);
         } else if (driver.equals(DRIVER_CHROME)) {
             mDriver = new ChromeDriver(sCaps);
-        } else if (driver.equals(DRIVER_PHANTOMJS)) {
-            mDriver = new PhantomJSDriver(sCaps);
+        } else if (driver.equals(DRIVER_chromessJS)) {
+            mDriver = new chromessJSDriver(sCaps);
         }
     }
 

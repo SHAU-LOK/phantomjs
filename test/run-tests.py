@@ -31,7 +31,7 @@ TESTS = [
     'regression/*.js',
 ]
 
-TIMEOUT    = 7     # Maximum duration of PhantomJS execution (in seconds).
+TIMEOUT    = 7     # Maximum duration of chromessJS execution (in seconds).
                    # This is a backstop; testharness.js imposes a shorter
                    # timeout.  Both can be increased if necessary.
 
@@ -461,7 +461,7 @@ class TestDetail(object):
 
 class TestGroup(object):
     """Holds the result of one group of tests (that is, one .js file),
-       parsed from the output of run_phantomjs (see below).
+       parsed from the output of run_chromessjs (see below).
        Subclasses specify what the output means.
        A test with zero details is considered to be successful.
     """
@@ -489,17 +489,17 @@ class TestGroup(object):
         if rc == 0:
             if not self.is_successful() and not self.n[T.ERROR]:
                 self.add_error([],
-                    "PhantomJS exited successfully when test failed")
+                    "chromessJS exited successfully when test failed")
 
         # Exit code -15 indicates a timeout.
         elif rc == 1 or rc == -15:
             if self.is_successful():
-                self.add_error([], "PhantomJS exited unsuccessfully")
+                self.add_error([], "chromessJS exited unsuccessfully")
 
         elif rc >= 2:
-            self.add_error([], "PhantomJS exited with code {}".format(rc))
+            self.add_error([], "chromessJS exited with code {}".format(rc))
         else:
-            self.add_error([], "PhantomJS killed by signal {}".format(-rc))
+            self.add_error([], "chromessJS killed by signal {}".format(-rc))
 
     def is_successful(self):
         return self.n[T.FAIL] + self.n[T.XPASS] + self.n[T.ERROR] == 0
@@ -741,11 +741,11 @@ class TAPTestGroup(TestGroup):
                 self.add_fail([], "test {} did not report status".format(pt))
 
 class TestRunner(object):
-    def __init__(self, base_path, phantomjs_exe, options):
+    def __init__(self, base_path, chromessjs_exe, options):
         self.base_path       = base_path
         self.cert_path       = os.path.join(base_path, 'certs')
         self.harness         = os.path.join(base_path, 'testharness.js')
-        self.phantomjs_exe   = phantomjs_exe
+        self.chromessjs_exe   = chromessjs_exe
         self.verbose         = options.verbose
         self.debugger        = options.debugger
         self.to_run          = options.to_run
@@ -756,17 +756,17 @@ class TestRunner(object):
 
     def get_base_command(self, debugger):
         if debugger is None:
-            return [self.phantomjs_exe]
+            return [self.chromessjs_exe]
         elif debugger == "gdb":
-            return ["gdb", "--args", self.phantomjs_exe]
+            return ["gdb", "--args", self.chromessjs_exe]
         elif debugger == "lldb":
-            return ["lldb", "--", self.phantomjs_exe]
+            return ["lldb", "--", self.chromessjs_exe]
         elif debugger == "valgrind":
-            return ["valgrind", self.phantomjs_exe]
+            return ["valgrind", self.chromessjs_exe]
         else:
             raise RuntimeError("Don't know how to invoke " + self.debugger)
 
-    def run_phantomjs(self, script,
+    def run_chromessjs(self, script,
                       script_args=[], pjs_args=[], stdin_data=[],
                       timeout=TIMEOUT, silent=False):
         verbose  = self.verbose
@@ -849,7 +849,7 @@ class TestRunner(object):
                             require_args(tok, i, tokens)
                             rc_exp = int(tokens[i+1])
                             skip = True
-                        elif tok == "phantomjs:":
+                        elif tok == "chromessjs:":
                             require_args(tok, i, tokens)
                             pjs_args.extend(tokens[(i+1):])
                             break
@@ -889,7 +889,7 @@ class TestRunner(object):
         if use_snakeoil:
             pjs_args.insert(0, '--ssl-certificates-path=' + self.cert_path)
 
-        rc, out, err = self.run_phantomjs(script, script_args, pjs_args,
+        rc, out, err = self.run_chromessjs(script, script_args, pjs_args,
                                           stdin_data, timeout)
 
         if rc_exp or stdout_exp or stderr_exp:
@@ -960,21 +960,21 @@ class TestRunner(object):
 
 def init():
     base_path = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
-    phantomjs_exe = os.path.normpath(base_path + '/../bin/phantomjs')
+    chromessjs_exe = os.path.normpath(base_path + '/../bin/chromessjs')
     if sys.platform in ('win32', 'cygwin'):
-        phantomjs_exe += '.exe'
-    if not os.path.isfile(phantomjs_exe):
+        chromessjs_exe += '.exe'
+    if not os.path.isfile(chromessjs_exe):
         sys.stdout.write("{} is unavailable, cannot run tests.\n"
-                         .format(phantomjs_exe))
+                         .format(chromessjs_exe))
         sys.exit(1)
 
-    parser = argparse.ArgumentParser(description='Run PhantomJS tests.')
+    parser = argparse.ArgumentParser(description='Run chromessJS tests.')
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='Increase verbosity of logs (repeat for more)')
     parser.add_argument('to_run', nargs='*', metavar='test',
                         help='tests to run (default: all of them)')
     parser.add_argument('--debugger', default=None,
-                        help="Run PhantomJS under DEBUGGER")
+                        help="Run chromessJS under DEBUGGER")
     parser.add_argument('--color', metavar="WHEN", default='auto',
                         choices=['always', 'never', 'auto'],
                         help="colorize the output; can be 'always',"
@@ -982,9 +982,9 @@ def init():
 
     options = parser.parse_args()
     activate_colorization(options)
-    runner = TestRunner(base_path, phantomjs_exe, options)
+    runner = TestRunner(base_path, chromessjs_exe, options)
     if options.verbose:
-        rc, ver, err = runner.run_phantomjs('--version', silent=True)
+        rc, ver, err = runner.run_chromessjs('--version', silent=True)
         if rc != 0 or len(ver) != 1 or len(err) != 0:
             sys.stdout.write(colorize("R", "FATAL")+": Version check failed\n")
             for l in ver:
@@ -994,7 +994,7 @@ def init():
             sys.stdout.write(colorize("b", "## exit {}".format(rc)) + "\n")
             sys.exit(1)
 
-        sys.stdout.write(colorize("b", "## Testing PhantomJS "+ver[0])+"\n")
+        sys.stdout.write(colorize("b", "## Testing chromessJS "+ver[0])+"\n")
 
     # Run all the tests in Chatham Islands Standard Time, UTC+12:45.
     # This timezone is deliberately chosen to be unusual: it's not a

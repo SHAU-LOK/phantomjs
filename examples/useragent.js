@@ -11,5 +11,5 @@ page.open('http://www.httpuseragent.org', function (status) {
         });
         console.log(ua);
     }
-    phantom.exit();
+    chromess.exit();
 });

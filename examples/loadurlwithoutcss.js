@@ -4,7 +4,7 @@ var page = require('webpage').create(),
 
 if (system.args.length < 2) {
     console.log('Usage: loadurlwithoutcss.js URL');
-    phantom.exit();
+    chromess.exit();
 }
 
 var address = system.args[1];
@@ -18,9 +18,9 @@ page.onResourceRequested = function(requestData, request) {
 
 page.open(address, function(status) {
     if (status === 'success') {
-        phantom.exit();
+        chromess.exit();
     } else {
         console.log('Unable to load the address!');
-        phantom.exit();
+        chromess.exit();
     }
 });

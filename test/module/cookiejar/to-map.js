@@ -32,10 +32,10 @@ test(function () {
     var i, c, d, prop;
     for (i in cookies) {
         if (!cookies.hasOwnProperty(i)) continue;
-        phantom.addCookie(cookies[i]);
+        chromess.addCookie(cookies[i]);
     }
-    for (i in phantom.cookies) {
-        d = phantom.cookies[i];
+    for (i in chromess.cookies) {
+        d = chromess.cookies[i];
         c = cookies[d.name];
         for (prop in c) {
             if (!c.hasOwnProperty(prop)) continue;

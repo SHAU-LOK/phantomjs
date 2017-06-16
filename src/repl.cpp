@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
 
@@ -40,8 +40,8 @@
 #include "terminal.h"
 #include "utils.h"
 
-#define PROMPT                          "phantomjs> "
-#define HISTORY_FILENAME                "phantom_repl_history"
+#define PROMPT                          "chromessjs> "
+#define HISTORY_FILENAME                "chromess_repl_history"
 
 // Only with word characters, spaces and the dot ('.')
 //  we can still attempt to offer a completion to the user
@@ -70,7 +70,7 @@ bool REPL::instanceExists()
     return REPL::getInstance() != NULL;
 }
 
-REPL* REPL::getInstance(QWebFrame* webframe, Phantom* parent)
+REPL* REPL::getInstance(QWebFrame* webframe, chromess* parent)
 {
     static REPL* singleton = NULL;
     if (!singleton && webframe && parent) {
@@ -127,12 +127,12 @@ QStringList REPL::_enumerateCompletions(QObject* obj) const
 }
 
 // private:
-REPL::REPL(QWebFrame* webframe, Phantom* parent)
+REPL::REPL(QWebFrame* webframe, chromess* parent)
     : QObject(parent),
       m_looping(true)
 {
     m_webframe = webframe;
-    m_parentPhantom = parent;
+    m_parentchromess = parent;
     m_historyFilepath = QString("%1/%2").arg(
                             QStandardPaths::writableLocation(QStandardPaths::DataLocation),
                             HISTORY_FILENAME).toLocal8Bit();
@@ -140,8 +140,8 @@ REPL::REPL(QWebFrame* webframe, Phantom* parent)
     // Ensure the location for the history file exists
     QDir().mkpath(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
 
-    // Listen for Phantom exit(ing)
-    connect(m_parentPhantom, SIGNAL(aboutToExit(int)), this, SLOT(stopLoop(int)));
+    // Listen for chromess exit(ing)
+    connect(m_parentchromess, SIGNAL(aboutToExit(int)), this, SLOT(stopLoop(int)));
 
     // Set the static callback to offer Completions to the User
     linenoiseSetCompletionCallback(REPL::offerCompletion);
@@ -207,10 +207,10 @@ void REPL::startLoop()
     linenoiseHistoryLoad(m_historyFilepath.data());         //< requires "char *"
     while (m_looping && (userInput = linenoise(PROMPT)) != NULL) {
         if (userInput[0] != '\0') {
-            // Send the user input to the main Phantom frame for evaluation
+            // Send the user input to the main chromess frame for evaluation
             m_webframe->evaluateJavaScript(
                 QString(JS_EVAL_USER_INPUT).arg(
-                    QString(userInput).replace('"', "\\\"")), QString("phantomjs://repl-input"));
+                    QString(userInput).replace('"', "\\\"")), QString("chromessjs://repl-input"));
 
             // Save command in the REPL history
             linenoiseHistoryAdd(userInput);
@@ -219,9 +219,9 @@ void REPL::startLoop()
         free(userInput);
     }
 
-    // If still "looping", close Phantom (usually caused by "CTRL+C" / "CTRL+D")
+    // If still "looping", close chromess (usually caused by "CTRL+C" / "CTRL+D")
     if (m_looping) {
-        m_parentPhantom->exit();
+        m_parentchromess->exit();
     }
 }
 

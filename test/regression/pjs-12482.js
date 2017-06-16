@@ -1,8 +1,8 @@
 //! no-harness
 
-// https://github.com/ariya/phantomjs/issues/12482
+// https://github.com/ariya/chromessjs/issues/12482
 // regression caused by fix for
-// https://github.com/ariya/phantomjs/issues/12431
+// https://github.com/ariya/chromessjs/issues/12431
 
 var webpage = require('webpage');
 var sys = require('system');
@@ -16,7 +16,7 @@ var pages = [
 var loaded = 0;
 
 sys.stdout.write("1.." + pages.length + "\n");
-setTimeout(function () { phantom.exit(1); }, 200);
+setTimeout(function () { chromess.exit(1); }, 200);
 
 function loadHook (status) {
     loaded++;
@@ -29,7 +29,7 @@ function loadHook (status) {
     if (loaded === pages.length) {
         pages[1].close();
         setTimeout(function(){
-            phantom.exit(0);
+            chromess.exit(0);
             sys.stdout.write("not ok " + (pages.length+1) +
                              " should not get here # TODO\n");
         }, 50);

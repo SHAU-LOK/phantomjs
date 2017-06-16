@@ -29,7 +29,7 @@ async_test(function () {
     });
 
     page.open(TEST_HTTP_BASE + 'status?status=401' +
-              '&WWW-Authenticate=Basic%20realm%3D%22PhantomJS%20test%22',
+              '&WWW-Authenticate=Basic%20realm%3D%22chromessJS%20test%22',
               this.step_func_done(function (status) {
                   assert_equals(status, 'fail');
               }));

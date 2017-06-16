@@ -11,7 +11,7 @@ tests.push([function () {
     assert_own_property(require('cookiejar'), 'create');
 
     assert_own_property(require('fs'), 'separator');
-    assert_equals(require('system').platform, 'phantomjs');
+    assert_equals(require('system').platform, 'chromessjs');
 
 }, "native modules"]);
 

@@ -69,5 +69,5 @@ p.open("../test/webpage-spec-frames/index.html", function(status) {
     console.log("setPageTitle(CURRENT TITLE+'-visited')"); setPageTitle(p, pageTitle(p) + "-visited");
     console.log("");
 
-    phantom.exit();
+    chromess.exit();
 });

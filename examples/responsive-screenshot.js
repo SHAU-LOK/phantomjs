@@ -1,46 +1,46 @@
 /**
  * Captures the full height document even if it's not showing on the screen or captures with the provided range of screen sizes.
  *
- * A basic example for taking a screen shot using phantomjs which is sampled for https://nodejs-dersleri.github.io/
+ * A basic example for taking a screen shot using chromessjs which is sampled for https://nodejs-dersleri.github.io/
  *
- * usage : phantomjs responsive-screenshot.js {url} [output format] [doClipping]
+ * usage : chromessjs responsive-screenshot.js {url} [output format] [doClipping]
  *
  * examples >
- *      phantomjs responsive-screenshot.js https://nodejs-dersleri.github.io/
- *      phantomjs responsive-screenshot.js https://nodejs-dersleri.github.io/ pdf
- *      phantomjs responsive-screenshot.js https://nodejs-dersleri.github.io/ true
- *      phantomjs responsive-screenshot.js https://nodejs-dersleri.github.io/ png true
+ *      chromessjs responsive-screenshot.js https://nodejs-dersleri.github.io/
+ *      chromessjs responsive-screenshot.js https://nodejs-dersleri.github.io/ pdf
+ *      chromessjs responsive-screenshot.js https://nodejs-dersleri.github.io/ true
+ *      chromessjs responsive-screenshot.js https://nodejs-dersleri.github.io/ png true
  *
  * @author Salih sagdilek <salihsagdilek@gmail.com>
  */
 
 /**
- * http://phantomjs.org/api/system/property/args.html
+ * http://chromessjs.org/api/system/property/args.html
  *
  * Queries and returns a list of the command-line arguments.
  * The first one is always the script name, which is then followed by the subsequent arguments.
  */
 var args = require('system').args;
 /**
- * http://phantomjs.org/api/fs/
+ * http://chromessjs.org/api/fs/
  *
  * file system api
  */
 var fs = require('fs');
 
 /**
- * http://phantomjs.org/api/webpage/
+ * http://chromessjs.org/api/webpage/
  *
  * Web page api
  */
 var page = new WebPage();
 
 /**
- * if url address does not exist, exit phantom
+ * if url address does not exist, exit chromess
  */
 if ( 1 === args.length ) {
     console.log('Url address is required');
-    phantom.exit();
+    chromess.exit();
 }
 
 /**
@@ -110,7 +110,7 @@ page.open(urlAddress, function (status) {
 
         render(viewports.length);
     }
-    phantom.exit();
+    chromess.exit();
 });
 
 /**
@@ -175,7 +175,7 @@ function urlToDir(url) {
 
     if ( !fs.makeTree(dir) ) {
         console.log('"' + dir + '" is NOT created.');
-        phantom.exit();
+        chromess.exit();
     }
     return dir;
 }

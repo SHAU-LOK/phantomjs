@@ -35,14 +35,14 @@ page.onInitialized = function () {
 
 if (system.args.length === 1) {
     console.log('Usage: detectsniff.js <some URL>');
-    phantom.exit(1);
+    chromess.exit(1);
 } else {
     address = system.args[1];
     console.log('Checking ' + address + '...');
     page.open(address, function (status) {
         if (status !== 'success') {
             console.log('FAIL to load the address');
-            phantom.exit();
+            chromess.exit();
         } else {
             window.setTimeout(function () {
                 sniffed = page.evaluate(function () {
@@ -53,7 +53,7 @@ if (system.args.length === 1) {
                 } else {
                     console.log('The page did not try to sniff the user agent.');
                 }
-                phantom.exit();
+                chromess.exit();
             }, 1500);
         }
     });

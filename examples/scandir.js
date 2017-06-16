@@ -4,8 +4,8 @@
 var system = require('system');
 
 if (system.args.length !== 2) {
-    console.log("Usage: phantomjs scandir.js DIRECTORY_TO_SCAN");
-    phantom.exit(1);
+    console.log("Usage: chromessjs scandir.js DIRECTORY_TO_SCAN");
+    chromess.exit(1);
 }
 
 var scanDirectory = function (path) {
@@ -21,4 +21,4 @@ var scanDirectory = function (path) {
     }
 };
 scanDirectory(system.args[1]);
-phantom.exit();
+chromess.exit();

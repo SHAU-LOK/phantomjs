@@ -4,7 +4,7 @@ async_test(function () {
 
     var page = webpage.create();
     var urlToChange = TEST_HTTP_BASE + 'logo.png';
-    var alternativeUrl = TEST_HTTP_BASE + 'phantomjs-logo.gif';
+    var alternativeUrl = TEST_HTTP_BASE + 'chromessjs-logo.gif';
     var startStage = 0;
     var endStage = 0;
 

@@ -1,4 +1,4 @@
-Please see also http://phantomjs.org/releases.html.
+Please see also http://chromessjs.org/releases.html.
 
 2016-01-23: Version 2.1.0
 
@@ -276,7 +276,7 @@ Please see also http://phantomjs.org/releases.html.
     Bug fixes
 
       * Fix potential crash in QUrl with Qt 4.8 (issue 304)
-      * Fix bug in CookieJar with QSettings and string (PyPhantomJS issue 10)
+      * Fix bug in CookieJar with QSettings and string (PychromessJS issue 10)
       * Prevent showing the icon on Mac OS X Dock (issue 281)
 
     Examples
@@ -330,7 +330,7 @@ Please see also http://phantomjs.org/releases.html.
       * Added callback for console message (issue 12)
       * Improved security model via WebPage object (issue 41)
       * Added support for POST, HEAD, PUT, and DELETE (issue 88)
-      * Scripts filename is now passed as phantom.scriptName
+      * Scripts filename is now passed as chromess.scriptName
       * Added callback to capture resource requests and responses (issue 2)
       * Added the ability to load external JavaScript (issue 32)
 
@@ -392,7 +392,7 @@ Please see also http://phantomjs.org/releases.html.
 
     Initial launch.
 
-    The API is centralized at the 'phantom' object (as child of
+    The API is centralized at the 'chromess' object (as child of
     window object) which has the properties: args, content,
     loadStatus, state, userAgent, version, viewportSize, and
     the following functions: exit, open, render, sleep.

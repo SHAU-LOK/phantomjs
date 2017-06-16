@@ -16,4 +16,4 @@ system.stdout.writeLine('system.stdin.read(5): (ctrl+D to end)');
 var input = system.stdin.read(5);
 system.stdout.writeLine(JSON.stringify(input));
 
-phantom.exit(0);
+chromess.exit(0);

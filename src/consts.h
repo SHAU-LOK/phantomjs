@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -32,16 +32,16 @@
 #ifndef CONSTS_H
 #define CONSTS_H
 
-#define PHANTOMJS_VERSION_MAJOR     2
-#define PHANTOMJS_VERSION_MINOR     1
-#define PHANTOMJS_VERSION_PATCH     1
-#define PHANTOMJS_VERSION_STRING    "2.1.1"
+#define chromessJS_VERSION_MAJOR     2
+#define chromessJS_VERSION_MINOR     1
+#define chromessJS_VERSION_PATCH     1
+#define chromessJS_VERSION_STRING    "2.1.1"
 
 #define HTTP_HEADER_CONTENT_LENGTH      "content-length"
 #define HTTP_HEADER_CONTENT_TYPE        "content-type"
 
-#define JAVASCRIPT_SOURCE_PLATFORM_URL  "phantomjs://platform/%1"
-#define JAVASCRIPT_SOURCE_CODE_URL      "phantomjs://code/%1"
+#define JAVASCRIPT_SOURCE_PLATFORM_URL  "chromessjs://platform/%1"
+#define JAVASCRIPT_SOURCE_CODE_URL      "chromessjs://code/%1"
 
 #define JS_ELEMENT_CLICK "(function (el) { " \
     "var ev = document.createEvent('MouseEvents');" \

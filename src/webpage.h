@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -43,7 +43,7 @@ class CustomPage;
 class WebpageCallbacks;
 class NetworkAccessManager;
 class QWebInspector;
-class Phantom;
+class chromess;
 
 class WebPage : public QObject, public QWebFrame::PrintCallback
 {
@@ -545,7 +545,7 @@ private:
     bool m_shouldInterruptJs;
     CookieJar* m_cookieJar;
 
-    friend class Phantom;
+    friend class chromess;
     friend class CustomPage;
 };
 

@@ -15,5 +15,5 @@ page.open(server, 'post', data, headers, function (status) {
     } else {
         console.log(page.content);
     }
-    phantom.exit();
+    chromess.exit();
 });

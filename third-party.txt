@@ -1,9 +1,9 @@
 This document contains the list of Third Party Software included with
-PhantomJS, along with the license information.
+chromessJS, along with the license information.
 
 Third Party Software may impose additional restrictions and it is the
 user's responsibility to ensure that they have met the licensing
-requirements of PhantomJS and the relevant license of the Third Party
+requirements of chromessJS and the relevant license of the Third Party
 Software they are using.
 
 Qt - http://qt-project.org/

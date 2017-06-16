@@ -148,8 +148,8 @@ async_test(function () {
     var page = require("webpage").create();
     var url = "http://localhost:"+port+"/";
     var fs = require("fs");
-    var png = fs.read(fs.join(phantom.libraryPath,
-                              "../../www/phantomjs.png"), "b");
+    var png = fs.read(fs.join(chromess.libraryPath,
+                              "../../www/chromessjs.png"), "b");
 
     arm_check_request(this, false, png, "image/png");
     page.open(url, "get", this.step_func_done(function (status) {
@@ -168,8 +168,8 @@ async_test(function () {
     }));
 
 }, "handling binary data", {
-    skip: true,           // crash: https://github.com/ariya/phantomjs/issues/13461
+    skip: true,           // crash: https://github.com/ariya/chromessjs/issues/13461
     expected_fail: true   // received image is corrupt:
-                          // https://github.com/ariya/phantomjs/issues/13026
+                          // https://github.com/ariya/chromessjs/issues/13026
                           // and perhaps others
 });

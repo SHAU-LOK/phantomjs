@@ -11,7 +11,7 @@ async_test(function () {
               }));
 
 }, "page.onLongRunningScript can interrupt scripts", {
-    skip: true // https://github.com/ariya/phantomjs/issues/13490
+    skip: true // https://github.com/ariya/chromessjs/issues/13490
                // The underlying WebKit feature is so broken that an
                // infinite loop in a _page_ script prevents timeouts
                // from firing in the _controller_!

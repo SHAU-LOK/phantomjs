@@ -1,4 +1,4 @@
-//! phantomjs: --local-url-access=no
+//! chromessjs: --local-url-access=no
 
 var webpage = require("webpage");
 

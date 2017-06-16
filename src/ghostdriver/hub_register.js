@@ -37,7 +37,7 @@ var nodeconf = function(ip, port, hub, proxy, version) {
 
         return {
             capabilities: [{
-                browserName: "phantomjs",
+                browserName: "chromessjs",
                 version: version,
                 platform: ghostdriver.system.os.name + '-' + ghostdriver.system.os.version + '-' + ghostdriver.system.os.architecture,
                 maxInstances: 1,
@@ -84,11 +84,11 @@ module.exports = {
             }, function(status) {
                 if(status !== 'success') {
                     _log.error("register", "Unable to contact grid " + hub + ": " + status);
-                    phantom.exit(1);
+                    chromess.exit(1);
                 }
                 if(page.framePlainText !== "ok") {
                     _log.error("register", "Problem registering with grid " + hub + ": " + page.content);
-                    phantom.exit(1);
+                    chromess.exit(1);
                 }
                 _log.info("register", "Registered with grid hub: " + hub + " (" + page.framePlainText + ")");
             });

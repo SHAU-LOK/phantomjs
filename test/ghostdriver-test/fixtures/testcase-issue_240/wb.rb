@@ -32,7 +32,7 @@ end
 
 session_data = {
   desiredCapabilities: {
-    browserName: "phantomjs",
+    browserName: "chromessjs",
     platform: "ANY",
     javascriptEnabled: true,
     cssSelectorsEnabled: true,

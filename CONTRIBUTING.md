@@ -1,6 +1,6 @@
 # Contribution Guide
 
-This page describes how to contribute changes to PhantomJS.
+This page describes how to contribute changes to chromessJS.
 
 Please do **not** create a pull request without reading this guide first. Failure to do so may result in the **rejection** of the pull request.
 
@@ -22,11 +22,11 @@ In the commit message:
 
 *Second opinion is always important.*
 
-**Bug fixing**. If you have a fix for a bug, please attach your patch in the corresponding issue in the [issue tracker](https://github.com/ariya/phantomjs/issues). If there is no entry for the bug yet, then please create a new one. If you are confident working with Git, see the Get Ready section below on how to submit your change.
+**Bug fixing**. If you have a fix for a bug, please attach your patch in the corresponding issue in the [issue tracker](https://github.com/ariya/chromessjs/issues). If there is no entry for the bug yet, then please create a new one. If you are confident working with Git, see the Get Ready section below on how to submit your change.
 
-**Improvement and feature request**. If you have an improvement idea, please send an email to the [mailing list](http://groups.google.com/group/phantomjs) (rather than contacting the developers directly) so that other people can give their insights and opinions. This is also important to avoid duplicate work.
+**Improvement and feature request**. If you have an improvement idea, please send an email to the [mailing list](http://groups.google.com/group/chromessjs) (rather than contacting the developers directly) so that other people can give their insights and opinions. This is also important to avoid duplicate work.
 
-**Task management**. Once the feature idea is agreed upon and translated into concrete actions and tasks, please use the [issue tracker](https://github.com/ariya/phantomjs/issues) to create an issue for each individual task. Further technical discussion about the task and the implementation details should be carried out in the issue tracker.
+**Task management**. Once the feature idea is agreed upon and translated into concrete actions and tasks, please use the [issue tracker](https://github.com/ariya/chromessjs/issues) to create an issue for each individual task. Further technical discussion about the task and the implementation details should be carried out in the issue tracker.
 
 **Extending with new API**. Whenever you want to introduce a new API, please send an email to the mailing list along with the link to the issue. Consider good API name for the object or function, read the [API Design Principle](http://wiki.qt.io/API_Design_Principles) article. It may require few iterations to agree on the final API and hence it is important to engage all interested parties as early as possible.
 
@@ -55,7 +55,7 @@ The above log is too short and useless in the long run. A better version (and no
 
     require('system').os.version should give "10.8 (Mountain Lion)".
 
-    https://github.com/ariya/phantomjs/issues/10688
+    https://github.com/ariya/chromessjs/issues/10688
 
 ### Use Feature Branch
 

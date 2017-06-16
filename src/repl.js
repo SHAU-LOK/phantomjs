@@ -1,7 +1,7 @@
 /*jslint sloppy: true, nomen: true */
 
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
 

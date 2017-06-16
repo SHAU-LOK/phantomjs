@@ -25,10 +25,10 @@ test(function () {
 
 test(function () {
 
-    fs.copyTree(phantom.libraryPath, TEST_DIR);
+    fs.copyTree(chromess.libraryPath, TEST_DIR);
     this.add_cleanup(function () { fs.removeTree(TEST_DIR); });
 
-    assert_deep_equals(fs.list(phantom.libraryPath), fs.list(TEST_DIR));
+    assert_deep_equals(fs.list(chromess.libraryPath), fs.list(TEST_DIR));
 
 }, "copying a directory tree");
 

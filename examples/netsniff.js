@@ -77,9 +77,9 @@ function createHAR(address, title, startTime, resources)
         log: {
             version: '1.2',
             creator: {
-                name: "PhantomJS",
-                version: phantom.version.major + '.' + phantom.version.minor +
-                    '.' + phantom.version.patch
+                name: "chromessJS",
+                version: chromess.version.major + '.' + chromess.version.minor +
+                    '.' + chromess.version.patch
             },
             pages: [{
                 startedDateTime: startTime.toISOString(),
@@ -99,7 +99,7 @@ var page = require('webpage').create(),
 
 if (system.args.length === 1) {
     console.log('Usage: netsniff.js <some URL>');
-    phantom.exit(1);
+    chromess.exit(1);
 } else {
 
     page.address = system.args[1];
@@ -130,7 +130,7 @@ if (system.args.length === 1) {
         var har;
         if (status !== 'success') {
             console.log('FAIL to load the address');
-            phantom.exit(1);
+            chromess.exit(1);
         } else {
             page.endTime = new Date();
             page.title = page.evaluate(function () {
@@ -138,7 +138,7 @@ if (system.args.length === 1) {
             });
             har = createHAR(page.address, page.title, page.startTime, page.resources);
             console.log(JSON.stringify(har, undefined, 4));
-            phantom.exit();
+            chromess.exit();
         }
     });
 }

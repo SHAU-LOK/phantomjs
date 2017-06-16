@@ -3,4 +3,4 @@
 //! expect-stderr: TIMEOUT: Process terminated after 0.25 seconds.
 //! timeout: 0.25
 
-// no code, so phantom will just sleep forever
+// no code, so chromess will just sleep forever

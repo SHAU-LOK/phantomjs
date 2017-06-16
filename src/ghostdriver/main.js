@@ -49,17 +49,17 @@ ghostdriver.config = require("./config.js").get();
 require("./third_party/parseuri.js").options.strictMode = true;
 
 // Load all the core dependencies
-// NOTE: We need to provide PhantomJS with the "require" module ASAP. This is a pretty s**t way to load dependencies
-phantom.injectJs("session.js");
-phantom.injectJs("inputs.js");
-phantom.injectJs("request_handlers/request_handler.js");
-phantom.injectJs("request_handlers/status_request_handler.js");
-phantom.injectJs("request_handlers/shutdown_request_handler.js");
-phantom.injectJs("request_handlers/session_manager_request_handler.js");
-phantom.injectJs("request_handlers/session_request_handler.js");
-phantom.injectJs("request_handlers/webelement_request_handler.js");
-phantom.injectJs("request_handlers/router_request_handler.js");
-phantom.injectJs("webelementlocator.js");
+// NOTE: We need to provide chromessJS with the "require" module ASAP. This is a pretty s**t way to load dependencies
+chromess.injectJs("session.js");
+chromess.injectJs("inputs.js");
+chromess.injectJs("request_handlers/request_handler.js");
+chromess.injectJs("request_handlers/status_request_handler.js");
+chromess.injectJs("request_handlers/shutdown_request_handler.js");
+chromess.injectJs("request_handlers/session_manager_request_handler.js");
+chromess.injectJs("request_handlers/session_request_handler.js");
+chromess.injectJs("request_handlers/webelement_request_handler.js");
+chromess.injectJs("request_handlers/router_request_handler.js");
+chromess.injectJs("webelementlocator.js");
 
 try {
     // HTTP Request Router
@@ -83,9 +83,9 @@ try {
         }
     } else {
         throw new Error("Could not start Ghost Driver");
-        phantom.exit(1);
+        chromess.exit(1);
     }
 } catch (e) {
     _log.error("main.fail", JSON.stringify(e));
-    phantom.exit(1);
+    chromess.exit(1);
 }

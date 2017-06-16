@@ -7,4 +7,4 @@ for (key in env) {
         console.log(key + '=' + env[key]);
     }
 }
-phantom.exit();
+chromess.exit();

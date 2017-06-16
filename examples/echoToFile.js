@@ -5,7 +5,7 @@ var fs = require('fs'),
 
 if (system.args.length < 3) {
     console.log("Usage: echoToFile.js DESTINATION_FILE <arguments to echo...>");
-    phantom.exit(1);
+    chromess.exit(1);
 } else {
     var content = '',
         f = null,
@@ -20,5 +20,5 @@ if (system.args.length < 3) {
         console.log(e);
     }
 
-    phantom.exit();
+    chromess.exit();
 }

@@ -10,14 +10,14 @@
 /**
  * Resource object
  * @typedef {Object} ResourceObject
- * @property {Object} request - PhantomJS request object
- * @property {Object} startReply - PhantomJS response object
- * @property {Object} endReply - PhantomJS response object
+ * @property {Object} request - chromessJS request object
+ * @property {Object} startReply - chromessJS response object
+ * @property {Object} endReply - chromessJS response object
  */
 
 /**
- * This function is based on PhantomJS network logging example:
- * https://github.com/ariya/phantomjs/blob/master/examples/netsniff.js
+ * This function is based on chromessJS network logging example:
+ * https://github.com/ariya/chromessjs/blob/master/examples/netsniff.js
  *
  * @param {PageObject} page
  * @param {ResourceObject} resources
@@ -153,9 +153,9 @@ exports.createHar = function (page, resources) {
         log: {
             version: '1.2',
             creator: {
-                name: "PhantomJS",
-                version: phantom.version.major + '.' + phantom.version.minor +
-                    '.' + phantom.version.patch
+                name: "chromessJS",
+                version: chromess.version.major + '.' + chromess.version.minor +
+                    '.' + chromess.version.patch
             },
             pages: [{
                 startedDateTime: (page.startTime instanceof Date)

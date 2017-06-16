@@ -1,7 +1,7 @@
 var webpage = require('webpage');
 
 async_test(function () {
-    var ua = 'PHANTOMJS-TEST-USER-AGENT';
+    var ua = 'chromessJS-TEST-USER-AGENT';
     var page = webpage.create({
         settings: {
             userAgent: ua

@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -59,7 +59,7 @@
 #include <QUrl>
 #include <QNetworkProxy>
 
-#include "phantom.h"
+#include "chromess.h"
 #include "networkaccessmanager.h"
 #include "utils.h"
 #include "config.h"
@@ -75,9 +75,9 @@
 
 // Ensure we have at least head and body.
 #define BLANK_HTML                      "<html><head></head><body></body></html>"
-#define CALLBACKS_OBJECT_NAME           "_phantom"
-#define INPAGE_CALL_NAME                "window.callPhantom"
-#define CALLBACKS_OBJECT_INJECTION      INPAGE_CALL_NAME" = function() { return window."CALLBACKS_OBJECT_NAME".call.call(_phantom, Array.prototype.slice.call(arguments, 0)); };"
+#define CALLBACKS_OBJECT_NAME           "_chromess"
+#define INPAGE_CALL_NAME                "window.callchromess"
+#define CALLBACKS_OBJECT_INJECTION      INPAGE_CALL_NAME" = function() { return window."CALLBACKS_OBJECT_NAME".call.call(_chromess, Array.prototype.slice.call(arguments, 0)); };"
 #define CALLBACKS_OBJECT_PRESENT        "typeof(window."CALLBACKS_OBJECT_NAME") !== \"undefined\";"
 
 #define STDOUT_FILENAME "/dev/stdout"
@@ -234,13 +234,13 @@ protected:
         if (m_webPage->ownsPages()) {
             newPage = new WebPage(m_webPage);
         } else {
-            newPage = new WebPage(Phantom::instance());
-            Phantom::instance()->m_pages.append(newPage);
+            newPage = new WebPage(chromess::instance());
+            chromess::instance()->m_pages.append(newPage);
         }
         newPage->setCookieJar(m_cookieJar);
 
         // Apply default settings
-        newPage->applySettings(Phantom::instance()->defaultPageSettings());
+        newPage->applySettings(chromess::instance()->defaultPageSettings());
 
         // Signal JS shim to catch, decorate and store this new child page
         emit m_webPage->rawPageCreated(newPage);
@@ -261,7 +261,7 @@ private:
 /**
   * Contains the Callback Objects used to regulate callback-traffic from the webpage internal context.
   * It's directly exposed within the webpage JS context,
-  * and indirectly in the phantom JS context.
+  * and indirectly in the chromess JS context.
   *
   * @class WebPageCallbacks
   */
@@ -361,14 +361,14 @@ WebPage::WebPage(QObject* parent, const QUrl& baseUrl)
     setObjectName("WebPage");
     m_callbacks = new WebpageCallbacks(this);
     m_customWebPage = new CustomPage(this);
-    Config* phantomCfg = Phantom::instance()->config();
+    Config* chromessCfg = chromess::instance()->config();
 
     // To grant universal access to a web page
     // attribute "WebSecurityEnabled" must be applied during the initializing
     // security context for Document instance. Setting up it later will not cause any effect
     // see <qt\src\3rdparty\webkit\Source\WebCore\dom\Document.cpp:4468>
     QWebSettings* settings = m_customWebPage->settings();
-    settings->setAttribute(QWebSettings::WebSecurityEnabled, phantomCfg->webSecurityEnabled());
+    settings->setAttribute(QWebSettings::WebSecurityEnabled, chromessCfg->webSecurityEnabled());
 
     m_mainFrame = m_customWebPage->mainFrame();
     m_currentFrame = m_mainFrame;
@@ -404,7 +404,7 @@ WebPage::WebPage(QObject* parent, const QUrl& baseUrl)
     m_customWebPage->setPalette(palette);
 
     // Set the page Library path
-    setLibraryPath(QFileInfo(phantomCfg->scriptFile()).dir().absolutePath());
+    setLibraryPath(QFileInfo(chromessCfg->scriptFile()).dir().absolutePath());
 
     // Page size does not need to take scrollbars into account.
     m_mainFrame->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
@@ -417,14 +417,14 @@ WebPage::WebPage(QObject* parent, const QUrl& baseUrl)
 
     pageSettings->setAttribute(QWebSettings::LocalStorageEnabled, true);
 
-    if (phantomCfg->localStoragePath().isEmpty()) {
+    if (chromessCfg->localStoragePath().isEmpty()) {
         pageSettings->setLocalStoragePath(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
     } else {
-        pageSettings->setLocalStoragePath(phantomCfg->localStoragePath());
+        pageSettings->setLocalStoragePath(chromessCfg->localStoragePath());
     }
 
     // Custom network access manager to allow traffic monitoring.
-    m_networkAccessManager = new NetworkAccessManager(this, phantomCfg);
+    m_networkAccessManager = new NetworkAccessManager(this, chromessCfg);
     m_customWebPage->setNetworkAccessManager(m_networkAccessManager);
     connect(m_networkAccessManager, SIGNAL(resourceRequested(QVariant, QObject*)),
             SIGNAL(resourceRequested(QVariant, QObject*)));
@@ -754,7 +754,7 @@ QVariant WebPage::evaluateJavaScript(const QString& code)
 
     evalResult = m_currentFrame->evaluateJavaScript(
                      function,                                   //< function evaluated
-                     QString("phantomjs://webpage.evaluate()")); //< reference source file
+                     QString("chromessjs://webpage.evaluate()")); //< reference source file
 
     qDebug() << "WebPage - evaluateJavaScript result" << evalResult;
 
@@ -971,7 +971,7 @@ bool WebPage::render(const QString& fileName, const QVariantMap& option)
     if (fileName == STDOUT_FILENAME || fileName == STDERR_FILENAME) {
         if (!QFile::exists(fileName)) {
             // create temporary file for OS that have no /dev/stdout or /dev/stderr. (ex. windows)
-            tempFileName = QDir::tempPath() + "/phantomjstemp" + QUuid::createUuid().toString();
+            tempFileName = QDir::tempPath() + "/chromessjstemp" + QUuid::createUuid().toString();
             outFileName = tempFileName;
         }
 
@@ -1013,7 +1013,7 @@ bool WebPage::render(const QString& fileName, const QVariantMap& option)
 
         QByteArray ba = i.readAll();
 
-        System* system = (System*)Phantom::instance()->createSystem();
+        System* system = (System*)chromess::instance()->createSystem();
         if (fileName == STDOUT_FILENAME) {
 #ifdef Q_OS_WIN
             _setmode(_fileno(stdout), O_BINARY);
@@ -1092,7 +1092,7 @@ QImage WebPage::renderImage()
 
     // We use tiling approach to work-around Qt software rasterizer bug
     // when dealing with very large paint device.
-    // See http://code.google.com/p/phantomjs/issues/detail?id=54.
+    // See http://code.google.com/p/chromessjs/issues/detail?id=54.
     const int tileSize = 4096;
     int htiles = (buffer.width() + tileSize - 1) / tileSize;
     int vtiles = (buffer.height() + tileSize - 1) / tileSize;
@@ -1124,7 +1124,7 @@ QImage WebPage::renderImage()
     return buffer;
 }
 
-#define PHANTOMJS_PDF_DPI 72            // Different defaults. OSX: 72, X11: 75(?), Windows: 96
+#define chromessJS_PDF_DPI 72            // Different defaults. OSX: 72, X11: 75(?), Windows: 96
 
 qreal stringToPointSize(const QString& string)
 {
@@ -1135,8 +1135,8 @@ qreal stringToPointSize(const QString& string)
         { "mm", 72 / 25.4 },
         { "cm", 72 / 2.54 },
         { "in", 72 },
-        { "px", 72.0 / PHANTOMJS_PDF_DPI },
-        { "", 72.0 / PHANTOMJS_PDF_DPI }
+        { "px", 72.0 / chromessJS_PDF_DPI },
+        { "", 72.0 / chromessJS_PDF_DPI }
     };
     for (uint i = 0; i < sizeof(units) / sizeof(units[0]); ++i) {
         if (string.endsWith(units[i].unit)) {
@@ -1163,7 +1163,7 @@ bool WebPage::renderPdf(const QString& fileName)
     QPrinter printer;
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOutputFileName(fileName);
-    printer.setResolution(PHANTOMJS_PDF_DPI);
+    printer.setResolution(chromessJS_PDF_DPI);
     QVariantMap paperSize = m_paperSize;
 
     if (paperSize.isEmpty()) {
@@ -1315,7 +1315,7 @@ QString getHeaderFooter(const QVariantMap& map, const QString& key, QWebFrame* f
             }
         }
     }
-    frame->evaluateJavaScript("console.error('Bad header callback given, use phantom.callback);", QString());
+    frame->evaluateJavaScript("console.error('Bad header callback given, use chromess.callback);", QString());
     return QString();
 }
 

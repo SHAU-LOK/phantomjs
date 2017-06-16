@@ -1,8 +1,8 @@
 /*jslint sloppy: true, nomen: true */
-/*global exports:true,phantom:true */
+/*global exports:true,chromess:true */
 
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -36,7 +36,7 @@
 */
 
 exports.create = function (opts) {
-    var server = phantom.createWebServer(),
+    var server = chromess.createWebServer(),
         handlers = {};
 
     function checkType(o, type) {

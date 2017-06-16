@@ -45,7 +45,7 @@ public class LogTest extends BaseTestWithServer {
         WebDriver d = getDriver();
         Set<String> logTypes = d.manage().logs().getAvailableLogTypes();
 
-        if (d.getClass().getSimpleName().equals("PhantomJSDriver")) {
+        if (d.getClass().getSimpleName().equals("chromessJSDriver")) {
             // GhostDriver only has 3 log types...
             assertEquals(3, logTypes.size());
             // ... and "har" is one of them
