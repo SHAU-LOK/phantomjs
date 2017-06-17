@@ -1,11 +1,11 @@
 [submodule "qtbase"]
 	path = src/qt/qtbase
 	url = https://github.com/Vitallium/qtbase.git
-	branch = phantomjs
+	branch = chromessjs
 [submodule "qtwebkit"]
 	path = src/qt/qtwebkit
 	url = https://github.com/Vitallium/qtwebkit.git
-	branch = phantomjs
+	branch = chromessjs
 [submodule "3rdparty-win"]
 	path = src/qt/3rdparty
-	url = https://github.com/Vitallium/phantomjs-3rdparty-win.git
+	url = https://github.com/Vitallium/chromessjs-3rdparty-win.git

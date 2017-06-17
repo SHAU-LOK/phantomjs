@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2012 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
@@ -84,7 +84,7 @@ static const struct QCommandLineConfigEntry flags[] = {
     { QCommandLine::Param, '\0', "argument", "Script argument", QCommandLine::OptionalMultiple },
     { QCommandLine::Switch, 'w', "wd", "Equivalent to '--webdriver' option above", QCommandLine::Optional },
     { QCommandLine::Switch, 'h', "help", "Shows this message and quits", QCommandLine::Optional },
-    { QCommandLine::Switch, 'v', "version", "Prints out PhantomJS version", QCommandLine::Optional },
+    { QCommandLine::Switch, 'v', "version", "Prints out chromessJS version", QCommandLine::Optional },
     QCOMMANDLINE_CONFIG_ENTRY_END
 };
 
@@ -93,7 +93,7 @@ Config::Config(QObject* parent)
 {
     m_cmdLine = new QCommandLine(this);
 
-    // We will handle --help and --version ourselves in phantom.cpp
+    // We will handle --help and --version ourselves in chromess.cpp
     m_cmdLine->enableHelp(false);
     m_cmdLine->enableVersion(false);
 

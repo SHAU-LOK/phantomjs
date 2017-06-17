@@ -7,4 +7,4 @@ if (system.args.length === 1) {
             console.log(i + ': ' + arg);
     });
 }
-phantom.exit();
+chromess.exit();

@@ -5,7 +5,7 @@ var page = require('webpage').create(),
 if (system.args.length < 7) {
     console.log('Usage: printmargins.js URL filename LEFT TOP RIGHT BOTTOM');
     console.log('  margin examples: "1cm", "10px", "7mm", "5in"');
-    phantom.exit(1);
+    chromess.exit(1);
 } else {
     var address = system.args[1];
     var output = system.args[2];
@@ -29,7 +29,7 @@ if (system.args.length < 7) {
         } else {
             window.setTimeout(function () {
                 page.render(output);
-                phantom.exit();
+                chromess.exit();
             }, 200);
         }
     });

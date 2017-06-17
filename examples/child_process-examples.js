@@ -24,5 +24,5 @@ execFile("ls", ["-lF", "/usr"], null, function (err, stdout, stderr) {
 })
 
 setTimeout(function () {
-  phantom.exit(0)
+  chromess.exit(0)
 }, 2000)

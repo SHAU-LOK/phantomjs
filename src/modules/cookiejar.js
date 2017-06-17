@@ -2,7 +2,7 @@
 /*global exports:true */
 
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2013 Joseph Rollinson, jtrollinson@gmail.com
 
@@ -36,14 +36,14 @@ function decorateCookieJar(jar) {
 }
 
 /* Creates and decorates a new cookie jar.
- * path is the file path where Phantomjs will store the cookie jar persistently.
+ * path is the file path where chromessjs will store the cookie jar persistently.
  * path is not mandatory.
  */
 exports.create = function (path) {
     if (arguments.length < 1) {
         path = "";
     }
-    return decorateCookieJar(phantom.createCookieJar(path));
+    return decorateCookieJar(chromess.createCookieJar(path));
 };
 
 /* Exports the decorateCookieJar function */

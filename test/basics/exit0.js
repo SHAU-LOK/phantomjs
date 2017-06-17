@@ -5,5 +5,5 @@
 
 var sys = require('system');
 sys.stdout.write("we are alive\n");
-phantom.exit();
-sys.stdout.write("ERROR control passed beyond phantom.exit");
+chromess.exit();
+sys.stdout.write("ERROR control passed beyond chromess.exit");

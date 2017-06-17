@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2012 execjosh, http://execjosh.blogspot.com
   Copyright (C) 2012 James M. Greene <james.m.greene@gmail.com>

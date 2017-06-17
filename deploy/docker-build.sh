@@ -47,16 +47,16 @@ echo "Transferring the source: $SOURCE_PATH -> $BUILD_PATH. Please wait..."
 cd $BUILD_PATH && cp -rp $SOURCE_PATH . && cd src
 echo
 
-echo "Compiling PhantomJS..." && sleep 1
+echo "Compiling chromessJS..." && sleep 1
 python build.py --confirm --release --qt-config="-no-pkg-config" --git-clean-qtbase --git-clean-qtwebkit
 echo
 
 echo "Stripping the executable..." && sleep 1
-ls -l bin/phantomjs
-strip bin/phantomjs
+ls -l bin/chromessjs
+strip bin/chromessjs
 echo "Copying the executable..." && sleep 1
-ls -l bin/phantomjs
-cp bin/phantomjs $SOURCE_PATH
+ls -l bin/chromessjs
+cp bin/chromessjs $SOURCE_PATH
 echo
 
 echo "Finished."

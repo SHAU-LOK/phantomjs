@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -47,8 +47,8 @@
 void
 print_crash_message()
 {
-    fputs("PhantomJS has crashed. Please read the bug reporting guide at\n"
-          "<http://phantomjs.org/bug-reporting.html> and file a bug report.\n",
+    fputs("chromessJS has crashed. Please read the bug reporting guide at\n"
+          "<http://chromessjs.org/bug-reporting.html> and file a bug report.\n",
           stderr);
     fflush(stderr);
 }
@@ -199,7 +199,7 @@ fail:
 void
 init_crash_handler()
 {
-    // Qt, QtWebkit, and PhantomJS mostly don't make use of C++ exceptions,
+    // Qt, QtWebkit, and chromessJS mostly don't make use of C++ exceptions,
     // so in the rare cases where an exception does get thrown, it will
     // pass all the way up the stack and cause the C++ runtime to call
     // std::terminate().  The default std::terminate() handler in some C++

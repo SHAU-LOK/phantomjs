@@ -5,6 +5,6 @@ var ticker = window.setInterval(function () {
     fibs.push(fibs[fibs.length - 1] + fibs[fibs.length - 2]);
     if (fibs.length > 10) {
         window.clearInterval(ticker);
-        phantom.exit();
+        chromess.exit();
     }
 }, 300);

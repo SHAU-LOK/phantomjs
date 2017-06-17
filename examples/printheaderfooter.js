@@ -8,7 +8,7 @@ function someCallback(pageNum, numPages) {
 
 if (system.args.length < 3) {
     console.log('Usage: printheaderfooter.js URL filename');
-    phantom.exit(1);
+    chromess.exit(1);
 } else {
     var address = system.args[1];
     var output = system.args[2];
@@ -19,7 +19,7 @@ if (system.args.length < 3) {
         /* default header/footer for pages that don't have custom overwrites (see below) */
         header: {
             height: "1cm",
-            contents: phantom.callback(function(pageNum, numPages) {
+            contents: chromess.callback(function(pageNum, numPages) {
                 if (pageNum == 1) {
                     return "";
                 }
@@ -28,7 +28,7 @@ if (system.args.length < 3) {
         },
         footer: {
             height: "1cm",
-            contents: phantom.callback(function(pageNum, numPages) {
+            contents: chromess.callback(function(pageNum, numPages) {
                 if (pageNum == numPages) {
                     return "";
                 }
@@ -41,14 +41,14 @@ if (system.args.length < 3) {
             console.log('Unable to load the address!');
         } else {
             /* check whether the loaded page overwrites the header/footer setting,
-               i.e. whether a PhantomJSPriting object exists. Use that then instead
+               i.e. whether a chromessJSPriting object exists. Use that then instead
                of our defaults above.
 
                example:
                <html>
                  <head>
                    <script type="text/javascript">
-                     var PhantomJSPrinting = {
+                     var chromessJSPrinting = {
                         header: {
                             height: "1cm",
                             contents: function(pageNum, numPages) { return pageNum + "/" + numPages; }
@@ -63,19 +63,19 @@ if (system.args.length < 3) {
                  <body><h1>asdfadsf</h1><p>asdfadsfycvx</p></body>
               </html>
             */
-            if (page.evaluate(function(){return typeof PhantomJSPrinting == "object";})) {
+            if (page.evaluate(function(){return typeof chromessJSPrinting == "object";})) {
                 paperSize = page.paperSize;
                 paperSize.header.height = page.evaluate(function() {
-                    return PhantomJSPrinting.header.height;
+                    return chromessJSPrinting.header.height;
                 });
-                paperSize.header.contents = phantom.callback(function(pageNum, numPages) {
-                    return page.evaluate(function(pageNum, numPages){return PhantomJSPrinting.header.contents(pageNum, numPages);}, pageNum, numPages);
+                paperSize.header.contents = chromess.callback(function(pageNum, numPages) {
+                    return page.evaluate(function(pageNum, numPages){return chromessJSPrinting.header.contents(pageNum, numPages);}, pageNum, numPages);
                 });
                 paperSize.footer.height = page.evaluate(function() {
-                    return PhantomJSPrinting.footer.height;
+                    return chromessJSPrinting.footer.height;
                 });
-                paperSize.footer.contents = phantom.callback(function(pageNum, numPages) {
-                    return page.evaluate(function(pageNum, numPages){return PhantomJSPrinting.footer.contents(pageNum, numPages);}, pageNum, numPages);
+                paperSize.footer.contents = chromess.callback(function(pageNum, numPages) {
+                    return page.evaluate(function(pageNum, numPages){return chromessJSPrinting.footer.contents(pageNum, numPages);}, pageNum, numPages);
                 });
                 page.paperSize = paperSize;
                 console.log(page.paperSize.header.height);
@@ -83,7 +83,7 @@ if (system.args.length < 3) {
             }
             window.setTimeout(function () {
                 page.render(output);
-                phantom.exit();
+                chromess.exit();
             }, 200);
         }
     });

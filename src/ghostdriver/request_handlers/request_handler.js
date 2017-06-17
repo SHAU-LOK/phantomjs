@@ -33,7 +33,7 @@ ghostdriver.RequestHandler = function() {
     _errors = require("./errors.js"),
     _handle = function(request, response) {
         // NOTE: Some language bindings result in a malformed "post" object.
-        // This might have to do with PhantomJS poor WebServer implementation.
+        // This might have to do with chromessJS poor WebServer implementation.
         // Here we override "request.post" with the "request.postRaw" that
         // is usually left intact.
         if (request.hasOwnProperty("postRaw")) {

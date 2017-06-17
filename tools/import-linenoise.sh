@@ -24,12 +24,12 @@ by [Salvatore Sanfilippo](https://github.com/antirez). Here we import a fork
 by [Tad Marshall](https://github.com/tadmarshall) that lives at
 [github.com/tadmarshall/linenoise](https://github.com/tadmarshall/linenoise).
 
-The version of Linenoise included in PhantomJS refers to the commit:
+The version of Linenoise included in chromessJS refers to the commit:
 -----
 $LATEST_COMMIT
 -----
 
-Some files not needed for PhantomJS are removed.
+Some files not needed for chromessJS are removed.
 
 Linenoise is licensed under the BSD-license.
 Kudos to all the developers that contribute to this nice little pearl.

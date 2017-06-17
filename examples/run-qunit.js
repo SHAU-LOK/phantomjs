@@ -25,7 +25,7 @@ function waitFor(testFx, onReady, timeOutMillis) {
                 if(!condition) {
                     // If condition still not fulfilled (timeout but condition is 'false')
                     console.log("'waitFor()' timeout");
-                    phantom.exit(1);
+                    chromess.exit(1);
                 } else {
                     // Condition fulfilled (timeout and/or condition is 'true')
                     console.log("'waitFor()' finished in " + (new Date().getTime() - start) + "ms.");
@@ -39,12 +39,12 @@ function waitFor(testFx, onReady, timeOutMillis) {
 
 if (system.args.length !== 2) {
     console.log('Usage: run-qunit.js URL');
-    phantom.exit(1);
+    chromess.exit(1);
 }
 
 var page = require('webpage').create();
 
-// Route "console.log()" calls from within the Page context to the main Phantom context (i.e. current "this")
+// Route "console.log()" calls from within the Page context to the main chromess context (i.e. current "this")
 page.onConsoleMessage = function(msg) {
     console.log(msg);
 };
@@ -52,7 +52,7 @@ page.onConsoleMessage = function(msg) {
 page.open(system.args[1], function(status){
     if (status !== "success") {
         console.log("Unable to access network");
-        phantom.exit(1);
+        chromess.exit(1);
     } else {
         waitFor(function(){
             return page.evaluate(function(){
@@ -71,7 +71,7 @@ page.open(system.args[1], function(status){
                 } catch (e) { }
                 return 10000;
             });
-            phantom.exit((parseInt(failedNum, 10) > 0) ? 1 : 0);
+            chromess.exit((parseInt(failedNum, 10) > 0) ? 1 : 0);
         });
     }
 });

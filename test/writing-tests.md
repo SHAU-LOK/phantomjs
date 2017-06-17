@@ -1,13 +1,13 @@
-# How to Write Tests for PhantomJS
+# How to Write Tests for chromessJS
 
-PhantomJS's automated tests are `.js` files located in subdirectories
+chromessJS's automated tests are `.js` files located in subdirectories
 of this directory.  The test runner, [`run-tests.py`](run-tests.py),
-executes each as a PhantomJS controller script.  (Not all
+executes each as a chromessJS controller script.  (Not all
 subdirectories of this directory contain tests; the authoritative list
 of test subdirectories is in
 [the `TESTS` variable in `run-tests.py`](run-tests.py#L26).)
 
-In addition to all of the usual PhantomJS API, these scripts have
+In addition to all of the usual chromessJS API, these scripts have
 access to a special testing API, loosely based on
 [W3C testharness.js](https://github.com/w3c/testharness.js) and
 defined in [`testharness.js`](testharness.js) in this directory.  They
@@ -33,7 +33,7 @@ of a setup function (see below).  You may define helper functions at
 top level, so long as they are only ever _called_ from subtests.  You
 may also initialize global variables at top level if this
 initialization cannot possibly fail, e.g. with constant data or with
-`require` calls for core PhantomJS modules.
+`require` calls for core chromessJS modules.
 
 The testing API is visible to a test script as a collection of global
 functions and variables, documented below.
@@ -54,7 +54,7 @@ unpredictable.  Also, subtests do not begin to execute until after all
 top-level code in the file has been evaluated.
 
 Some anomalous conditions are reported not as a failure, but as an
-"error".  For instance, if PhantomJS crashes during a test run, or if
+"error".  For instance, if chromessJS crashes during a test run, or if
 an exception is thrown from outside a step, that is an error, and the
 entire test will be abandoned.
 
@@ -99,7 +99,7 @@ There are two functions for defining synchronous subtests.
     reported as "skipped" rather than "succeeded" or "failed", and
     will not affect the overall outcome of the test.  Use `skip` only
     when `expected_fail` will not do—for instance, when a test
-    provokes a PhantomJS crash (there currently being no way to label
+    provokes a chromessJS crash (there currently being no way to label
     a crash as "expected").
 
   `test` returns the same `Test` object that is available as `this`
@@ -483,40 +483,40 @@ These are the recognized tokens:
 
 * `no-harness`: Run this test script directly; the testing API
   described above will not be available.  This is necessary to
-  test PhantomJS features that `testharness.js` reserves for its
-  own use, such as `phantom.onError` and `phantom.exit`.  No-harness
+  test chromessJS features that `testharness.js` reserves for its
+  own use, such as `chromess.onError` and `chromess.exit`.  No-harness
   tests will usually also be output-expectations tests (see below)
   but this is not required.
 
-* `no-snakeoil`: Do not instruct PhantomJS to accept the self-signed
+* `no-snakeoil`: Do not instruct chromessJS to accept the self-signed
   certificate presented by the HTTPS test server.
 
 * `timeout:` The next token on the line must be a positive
-  floating-point number.  `run-tests.py` will kill the PhantomJS
+  floating-point number.  `run-tests.py` will kill the chromessJS
   process, and consider the test to have failed, if it runs for longer
   than that many seconds.  The default timeout is seven seconds.
 
   This timeout is separate from the per-subtest and global timeouts
   enforced by the testing API.  It is intended as a backstop against
-  bugs which cause PhantomJS to stop executing the controller script.
+  bugs which cause chromessJS to stop executing the controller script.
   (In no-harness mode, it's the only timeout, unless you implement
   your own.)
 
-* `phantomjs:` All subsequent tokens on the line will be passed as
-  command-line arguments to PhantomJS, before the controller script.
-  Note that `run-tests.py` sets several PhantomJS command line options
+* `chromessjs:` All subsequent tokens on the line will be passed as
+  command-line arguments to chromessJS, before the controller script.
+  Note that `run-tests.py` sets several chromessJS command line options
   itself; you must take care not to do something contradictory.
 
 * `script:` All subsequent tokens on the line will be passed as
   command-line arguments to the *controller script*; that is, they
   will be available in
-  [`system.args`](http://phantomjs.org/api/system/property/args.html).
+  [`system.args`](http://chromessjs.org/api/system/property/args.html).
   Note that your controller script will only be `system.args[0]` if
   you are using no-harness mode, and that `run-tests.py` may pass
   additional script arguments of its own.
 
 * `stdin:` All subsequent tokens on the line will be concatenated
-  (separated by a single space) and fed to PhantomJS's standard input,
+  (separated by a single space) and fed to chromessJS's standard input,
   with a trailing newline.  If this token is used more than once,
   that produces several lines of input.  If this token is not used at
   all, standard input will read as empty.
@@ -536,14 +536,14 @@ Using any of the following annotations makes a test an
 output-expectations test:
 
 * `expect-exit:` The next token on the line must be an integer.  If it
-  is nonnegative, the PhantomJS process is expected to exit with that
+  is nonnegative, the chromessJS process is expected to exit with that
   exit code.  If it is negative, the process is expected to be
   terminated by the signal whose number is the absolute value of the
   token.  (For instance, `expect-exit: -15` for a test that is
   expected to hit the backstop timeout.)
 
 * `expect-stdout:` All subsequent tokens on the line are concatenated,
-  with spaces in between, and a newline is appeneded.  The PhantomJS
+  with spaces in between, and a newline is appeneded.  The chromessJS
   process is expected to emit that text, verbatim, on its standard
   output.  If used more than once, that produces multiple lines of
   expected output.

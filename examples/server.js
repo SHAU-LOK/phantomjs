@@ -6,7 +6,7 @@ var host, port;
 
 if (system.args.length !== 2) {
     console.log('Usage: server.js <some port>');
-    phantom.exit(1);
+    chromess.exit(1);
 } else {
     port = system.args[1];
     var listening = server.listen(port, function (request, response) {
@@ -27,7 +27,7 @@ if (system.args.length !== 2) {
     });
     if (!listening) {
         console.log("could not create web server listening on port " + port);
-        phantom.exit();
+        chromess.exit();
     }
     var url = "http://localhost:" + port + "/foo/bar.php?asdf=true";
     console.log("SENDING REQUEST TO:");
@@ -39,6 +39,6 @@ if (system.args.length !== 2) {
             console.log("GOT REPLY FROM SERVER:");
             console.log(page.content);
         }
-        phantom.exit();
+        chromess.exit();
     });
 }

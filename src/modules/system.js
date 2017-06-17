@@ -3,7 +3,7 @@
  * Spec: http://wiki.commonjs.org/wiki/System/1.0
  */
 
-exports.platform = 'phantomjs';
+exports.platform = 'chromessjs';
 
 Object.defineProperty(exports, 'stdout', {
     enumerable: true,

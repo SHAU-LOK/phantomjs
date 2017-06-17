@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -262,9 +262,9 @@ bool WebServer::handleRequest(mg_event event, mg_connection* conn, const mg_requ
         }
     }
 
-    // Emit signal that is catched by the PhantomJS callback,
+    // Emit signal that is catched by the chromessJS callback,
     // then wait until response.close() was called from
-    // the PhantomJS script.
+    // the chromessJS script.
     //
     // This is achieved using the wait semaphore, which is
     // acquired here, in the background thread, and released

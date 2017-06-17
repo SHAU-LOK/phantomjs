@@ -34,7 +34,7 @@ RenderUrlsToFile = function(urls, callbackPerUrl, callbackFinal) {
                 width: 800,
                 height: 600
             };
-            page.settings.userAgent = "Phantom.js bot";
+            page.settings.userAgent = "chromess.js bot";
             return page.open("http://" + url, function(status) {
                 var file;
                 file = getFilename();
@@ -59,8 +59,8 @@ arrayOfUrls = null;
 if (system.args.length > 1) {
     arrayOfUrls = Array.prototype.slice.call(system.args, 1);
 } else {
-    console.log("Usage: phantomjs render_multi_url.js [domain.name1, domain.name2, ...]");
-    arrayOfUrls = ["www.google.com", "www.bbc.co.uk", "phantomjs.org"];
+    console.log("Usage: chromessjs render_multi_url.js [domain.name1, domain.name2, ...]");
+    arrayOfUrls = ["www.google.com", "www.bbc.co.uk", "chromessjs.org"];
 }
 
 RenderUrlsToFile(arrayOfUrls, (function(status, url, file) {
@@ -70,5 +70,5 @@ RenderUrlsToFile(arrayOfUrls, (function(status, url, file) {
         return console.log("Rendered '" + url + "' at '" + file + "'");
     }
 }), function() {
-    return phantom.exit();
+    return chromess.exit();
 });

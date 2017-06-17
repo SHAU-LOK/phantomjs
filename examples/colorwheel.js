@@ -49,4 +49,4 @@ page.evaluate(function() {
 
 page.render('colorwheel.png');
 
-phantom.exit();
+chromess.exit();

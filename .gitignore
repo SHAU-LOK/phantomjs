@@ -20,7 +20,7 @@ qrc_*
 /deploy/Qt-*
 /symbols
 /src/qt/qtc-debugging-helper
-/src/phantomjs_plugin_import.cpp
+/src/chromessjs_plugin_import.cpp
 
 # ignore ctags
 /tags

@@ -1,7 +1,7 @@
 "use strict";
 var feature, supported = [], unsupported = [];
 
-phantom.injectJs('modernizr.js');
+chromess.injectJs('modernizr.js');
 console.log('Detected features (using Modernizr ' + Modernizr._version + '):');
 for (feature in Modernizr) {
     if (Modernizr.hasOwnProperty(feature)) {
@@ -27,4 +27,4 @@ console.log('Not supported:');
 unsupported.forEach(function (e) {
     console.log('  ' + e);
 });
-phantom.exit();
+chromess.exit();

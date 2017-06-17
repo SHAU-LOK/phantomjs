@@ -87,7 +87,7 @@ function check_stack(message, stack) {
 
 var helperBase = "error-helper.js";
 var helperFile = "../../fixtures/" + helperBase;
-assert_is_true(phantom.injectJs(helperFile));
+assert_is_true(chromess.injectJs(helperFile));
 
 test(function () {
     try {
@@ -99,7 +99,7 @@ test(function () {
 
 async_test(function () {
     var page = webpage.create();
-    page.libraryPath = phantom.libraryPath;
+    page.libraryPath = chromess.libraryPath;
     assert_is_true(page.injectJs(helperFile));
 
     page.onError = this.step_func_done(check_stack);

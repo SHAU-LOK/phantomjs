@@ -35,7 +35,7 @@ test(function () {
 test(function () {
     assert_own_property(system, 'platform');
     assert_type_of(system.platform, 'string');
-    assert_equals(system.platform, 'phantomjs');
+    assert_equals(system.platform, 'chromessjs');
 }, "system.platform");
 
 test(function () {

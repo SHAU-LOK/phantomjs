@@ -1,4 +1,4 @@
-//! phantomjs: --web-security=no --local-url-access=no
+//! chromessjs: --web-security=no --local-url-access=no
 
 var webpage = require("webpage");
 

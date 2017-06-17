@@ -65,8 +65,8 @@ ghostdriver.SessionReqHand = function(session) {
         BUTTON_DOWN     : "buttondown",
         BUTTON_UP       : "buttonup",
         DOUBLE_CLICK    : "doubleclick",
-        PHANTOM_DIR     : "/phantom/",
-        PHANTOM_EXEC    : "execute",
+        chromess_DIR     : "/chromess/",
+        chromess_EXEC    : "execute",
         LOG             : "log",
         TYPES           : "types"
     };
@@ -162,8 +162,8 @@ ghostdriver.SessionReqHand = function(session) {
         } else if (req.urlParsed.file === _const.MOVE_TO && req.method === "POST") {
             _postMouseMoveToCommand(req, res);
             return;
-        } else if (req.urlParsed.file === _const.PHANTOM_EXEC && req.urlParsed.directory === _const.PHANTOM_DIR && req.method === "POST") {
-            _executePhantomJS(req, res);
+        } else if (req.urlParsed.file === _const.chromess_EXEC && req.urlParsed.directory === _const.chromess_DIR && req.method === "POST") {
+            _executechromessJS(req, res);
             return;
         } else if (req.urlParsed.file === _const.CLICK && req.method === "POST") {
             _postMouseClickCommand(req, res, "click");
@@ -312,7 +312,7 @@ ghostdriver.SessionReqHand = function(session) {
             throw _errors.createInvalidReqInvalidCommandMethodEH(req);
         }
 
-        // NOTE: Nothing to do! PhantomJS is headless. :)
+        // NOTE: Nothing to do! chromessJS is headless. :)
         res.success(_session.getId());
     },
 
@@ -322,7 +322,7 @@ ghostdriver.SessionReqHand = function(session) {
     },
 
     _postWindowMaximizeCommand = function(req, res, targetWindow) {
-        // NOTE: PhantomJS is headless, so there is no "screen" to maximize to
+        // NOTE: chromessJS is headless, so there is no "screen" to maximize to
         // or "window" resize to that.
         //
         // NOTE: The most common screen resolution used online is currently: 1366x768
@@ -434,7 +434,7 @@ ghostdriver.SessionReqHand = function(session) {
             _protoParent.getSessionCurrWindow.call(this, _session, req).evaluate(
                 "function(script, args, timeout) { " +
                     "return (" + require("./webdriver_atoms.js").get("execute_async_script") + ")" +
-                        "(script, args, timeout, callPhantom, true); " +
+                        "(script, args, timeout, callchromess, true); " +
                 "}",
                 postObj.script,
                 postObj.args,
@@ -857,10 +857,10 @@ ghostdriver.SessionReqHand = function(session) {
         res.success(_session.getId(), _protoParent.getSessionCurrWindow.call(this, _session, req).title);
     },
 
-    _executePhantomJS = function(req, res) {
+    _executechromessJS = function(req, res) {
         var params = JSON.parse(req.post);
         if (typeof(params) === "object" && params.script && params.args) {
-            res.success(_session.getId(), _session.executePhantomJS(_protoParent.getSessionCurrWindow.call(this, _session, req), params.script, params.args));
+            res.success(_session.getId(), _session.executechromessJS(_protoParent.getSessionCurrWindow.call(this, _session, req), params.script, params.args));
         } else {
             throw _errors.createInvalidReqMissingCommandParameterEH(req);
         }

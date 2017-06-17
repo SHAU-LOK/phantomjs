@@ -18,10 +18,10 @@ function sleepSort(array, callback) {
 }
 
 if ( system.args.length < 2 ) {
-    console.log("Usage: phantomjs sleepsort.js PUT YOUR INTEGERS HERE SEPARATED BY SPACES");
-    phantom.exit(1);
+    console.log("Usage: chromessjs sleepsort.js PUT YOUR INTEGERS HERE SEPARATED BY SPACES");
+    chromess.exit(1);
 } else {
     sleepSort(system.args.slice(1), function() {
-        phantom.exit();
+        chromess.exit();
     });
 }

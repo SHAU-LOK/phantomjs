@@ -17,7 +17,7 @@
 // NOTE.1: The "onConsoleMessage/onAlert/onPrompt/onConfirm" events are
 // registered but not used here. This is left for you to have fun with.
 // NOTE.2: This script is not here to teach you ANY JavaScript. It's aweful!
-// NOTE.3: Main audience for this are people new to PhantomJS.
+// NOTE.3: Main audience for this are people new to chromessJS.
 
 "use strict";
 var sys = require("system"),
@@ -142,6 +142,6 @@ setTimeout(function() {
     console.log("### STEP 5: Close page and shutdown (with a delay)");
     page.close();
     setTimeout(function(){
-        phantom.exit();
+        chromess.exit();
     }, 100);
 }, 20000);

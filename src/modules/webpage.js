@@ -1,8 +1,8 @@
 /*jslint sloppy: true, nomen: true */
-/*global exports:true,phantom:true */
+/*global exports:true,chromess:true */
 
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -238,7 +238,7 @@ function decorateNewPage(opts, page) {
     } catch (e) {}
 
     // deep copy
-    page.settings = JSON.parse(JSON.stringify(phantom.defaultPageSettings));
+    page.settings = JSON.parse(JSON.stringify(chromess.defaultPageSettings));
 
     definePageSignalHandler(page, handlers, "onInitialized", "initialized");
 
@@ -269,9 +269,9 @@ function decorateNewPage(opts, page) {
     // Private callback for "page.open()"
     definePageSignalHandler(page, handlers, "_onPageOpenFinished", "loadFinished");
 
-    phantom.__defineErrorSignalHandler__(page, page, handlers);
+    chromess.__defineErrorSignalHandler__(page, page, handlers);
 
-    page.onError = phantom.defaultErrorHandler;
+    page.onError = chromess.defaultErrorHandler;
 
     page.open = function (url, arg1, arg2, arg3, arg4) {
         var thisPage = this;
@@ -438,7 +438,7 @@ function decorateNewPage(opts, page) {
         page = copyInto(page, opts);
     }
 
-    // Calls from within the page to "phantomCallback()" arrive to this handler
+    // Calls from within the page to "chromessCallback()" arrive to this handler
     definePageCallbackHandler(page, handlers, "onCallback", "_getGenericCallback");
 
     // Calls arrive to this handler when the user is asked to pick a file
@@ -889,5 +889,5 @@ function decorateNewPage(opts, page) {
 }
 
 exports.create = function (opts) {
-    return decorateNewPage(opts, phantom.createWebPage());
+    return decorateNewPage(opts, chromess.createWebPage());
 };

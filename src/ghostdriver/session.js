@@ -49,8 +49,8 @@ ghostdriver.Session = function(desiredCapabilities) {
 
     var
     _defaultCapabilities = {    // TODO - Actually try to match the "desiredCapabilities" instead of ignoring them
-        "browserName" : "phantomjs",
-        "version" : phantom.version.major + '.' + phantom.version.minor + '.' + phantom.version.patch,
+        "browserName" : "chromessjs",
+        "version" : chromess.version.major + '.' + chromess.version.minor + '.' + chromess.version.patch,
         "driverName" : "ghostdriver",
         "driverVersion" : ghostdriver.version,
         "platform" : ghostdriver.system.os.name + '-' + ghostdriver.system.os.version + '-' + ghostdriver.system.os.architecture,
@@ -66,7 +66,7 @@ ghostdriver.Session = function(desiredCapabilities) {
         "rotatable" : false,                //< TODO Target is 1.1
         "acceptSslCerts" : false,           //< TODO
         "nativeEvents" : true,              //< TODO Only some commands are Native Events currently
-        "proxy" : {                         //< TODO Support more proxy options - PhantomJS does allow setting from command line
+        "proxy" : {                         //< TODO Support more proxy options - chromessJS does allow setting from command line
             "proxyType" : _const.PROXY_TYPES.DIRECT
         },
     },
@@ -103,13 +103,13 @@ ghostdriver.Session = function(desiredCapabilities) {
         "implicit"          : 200,          //< 200ms
         "page load"         : _max32bitInt,
     },
-    _windows = {},  //< NOTE: windows are "webpage" in Phantom-dialect
+    _windows = {},  //< NOTE: windows are "webpage" in chromess-dialect
     _currentWindowHandle = null,
     _cookieJar = require('cookiejar').create(),
     _id = require("./third_party/uuid.js").v1(),
     _inputs = ghostdriver.Inputs(),
-    _capsPageSettingsPref = "phantomjs.page.settings.",
-    _capsPageCustomHeadersPref = "phantomjs.page.customHeaders.",
+    _capsPageSettingsPref = "chromessjs.page.settings.",
+    _capsPageCustomHeadersPref = "chromessjs.page.customHeaders.",
     _capsPageSettingsProxyPref = "proxy",
     _pageSettings = {},
     _additionalPageSettings = {
@@ -122,7 +122,7 @@ ghostdriver.Session = function(desiredCapabilities) {
 
     var
     /**
-     * Parses proxy JSON object and return proxy settings for phantom
+     * Parses proxy JSON object and return proxy settings for chromess
      *
      * @param proxyCapability proxy JSON Object: @see https://code.google.com/p/selenium/wiki/DesiredCapabilities
      */
@@ -143,9 +143,9 @@ ghostdriver.Session = function(desiredCapabilities) {
         return proxySettings;
     };
 
-    // Searching for `phantomjs.settings.* and phantomjs.customHeaders.*` in the Desired Capabilities and merging with the Negotiated Capabilities
-    // Possible values for settings: @see https://github.com/ariya/phantomjs/wiki/API-Reference#wiki-webpage-settings.
-    // Possible values for customHeaders: @see https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage#wiki-webpage-customHeaders.
+    // Searching for `chromessjs.settings.* and chromessjs.customHeaders.*` in the Desired Capabilities and merging with the Negotiated Capabilities
+    // Possible values for settings: @see https://github.com/ariya/chromessjs/wiki/API-Reference#wiki-webpage-settings.
+    // Possible values for customHeaders: @see https://github.com/ariya/chromessjs/wiki/API-Reference-WebPage#wiki-webpage-customHeaders.
     for (k in desiredCapabilities) {
         if (k.indexOf(_capsPageSettingsPref) === 0) {
             settingKey = k.substring(_capsPageSettingsPref.length);
@@ -163,7 +163,7 @@ ghostdriver.Session = function(desiredCapabilities) {
         }
         if (k.indexOf(_capsPageSettingsProxyPref) === 0) {
             proxySettings = _getProxySettingsFromCapabilities(desiredCapabilities[k]);
-            phantom.setProxy(proxySettings["ip"], proxySettings["port"], proxySettings["proxyType"], proxySettings["user"], proxySettings["password"]);
+            chromess.setProxy(proxySettings["ip"], proxySettings["port"], proxySettings["proxyType"], proxySettings["user"], proxySettings["password"]);
         }
     }
 
@@ -369,7 +369,7 @@ ghostdriver.Session = function(desiredCapabilities) {
 
         // 6. Applying Page settings received via capabilities
         for (k in _pageSettings) {
-            // Apply setting only if really supported by PhantomJS
+            // Apply setting only if really supported by chromessJS
             if (page.settings.hasOwnProperty(k) || _additionalPageSettings.hasOwnProperty(k)) {
                 page.settings[k] = _pageSettings[k];
             }
@@ -644,7 +644,7 @@ ghostdriver.Session = function(desiredCapabilities) {
         _setTimeout(_const.TIMEOUT_NAMES.PAGE_LOAD, ms);
     },
 
-    _executePhantomJS = function(page, script, args) {
+    _executechromessJS = function(page, script, args) {
         try {
             var code = new Function(script);
             return code.apply(page, args);
@@ -729,7 +729,7 @@ ghostdriver.Session = function(desiredCapabilities) {
         getScriptTimeout : _getScriptTimeout,
         getImplicitTimeout : _getImplicitTimeout,
         getPageLoadTimeout : _getPageLoadTimeout,
-        executePhantomJS : _executePhantomJS,
+        executechromessJS : _executechromessJS,
         timeoutNames : _const.TIMEOUT_NAMES,
         isLoading : _isLoading,
         getLog: _getLog,

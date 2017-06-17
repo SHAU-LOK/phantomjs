@@ -265,11 +265,11 @@ ghostdriver.Inputs = function () {
     _translateKey = function (session, key) {
         var
             actualKey = key,
-            phantomjskeys = session.getCurrentWindow().event.key;
+            chromessjskeys = session.getCurrentWindow().event.key;
         if (_specialKeys.hasOwnProperty(key)) {
             actualKey = _specialKeys[key];
-            if (phantomjskeys.hasOwnProperty(actualKey)) {
-                actualKey = phantomjskeys[actualKey];
+            if (chromessjskeys.hasOwnProperty(actualKey)) {
+                actualKey = chromessjskeys[actualKey];
             }
         }
         return actualKey;

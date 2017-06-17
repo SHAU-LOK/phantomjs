@@ -21,5 +21,5 @@ page.open('http://ariya.github.com/js/random/', function (status) {
             return document.getElementById('numbers').textContent;
         }));
     }
-    phantom.exit();
+    chromess.exit();
 });

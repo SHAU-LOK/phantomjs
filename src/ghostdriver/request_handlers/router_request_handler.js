@@ -63,7 +63,7 @@ ghostdriver.RouterReqHand = function() {
                 _statusRH.handle(req, res);
             } else if (req.urlParsed.chunks.length === 1 && req.urlParsed.file === _const.SHUTDOWN) {        // GET '/shutdown'
                 _shutdownRH.handle(req, res);
-                phantom.exit();
+                chromess.exit();
             } else if ((req.urlParsed.chunks.length === 1 && req.urlParsed.file === _const.SESSION) ||         // POST '/session'
                 (req.urlParsed.chunks.length === 1 && req.urlParsed.file === _const.SESSIONS) ||               // GET '/sessions'
                 req.urlParsed.directory === _const.SESSION_DIR) {       // GET or DELETE '/session/:id'

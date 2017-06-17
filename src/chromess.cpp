@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -28,7 +28,7 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "phantom.h"
+#include "chromess.h"
 
 #include <QApplication>
 #include <QDir>
@@ -51,10 +51,10 @@
 #include "cookiejar.h"
 #include "childprocess.h"
 
-static Phantom* phantomInstance = NULL;
+static chromess* chromessInstance = NULL;
 
 // private:
-Phantom::Phantom(QObject* parent)
+chromess::chromess(QObject* parent)
     : QObject(parent)
     , m_terminated(false)
     , m_returnValue(0)
@@ -71,15 +71,15 @@ Phantom::Phantom(QObject* parent)
     Utils::printDebugMessages = m_config.printDebugMessages();
 }
 
-void Phantom::init()
+void chromess::init()
 {
     if (m_config.helpFlag()) {
         Terminal::instance()->cout(QString("%1").arg(m_config.helpText()));
         Terminal::instance()->cout("Any of the options that accept boolean values ('true'/'false') can also accept 'yes'/'no'.");
         Terminal::instance()->cout("");
-        Terminal::instance()->cout("Without any argument, PhantomJS will launch in interactive mode (REPL).");
+        Terminal::instance()->cout("Without any argument, chromessJS will launch in interactive mode (REPL).");
         Terminal::instance()->cout("");
-        Terminal::instance()->cout("Documentation can be found at the web site, http://phantomjs.org.");
+        Terminal::instance()->cout("Documentation can be found at the web site, http://chromessjs.org.");
         Terminal::instance()->cout("");
         m_terminated = true;
         return;
@@ -87,7 +87,7 @@ void Phantom::init()
 
     if (m_config.versionFlag()) {
         m_terminated = true;
-        Terminal::instance()->cout(QString("%1").arg(PHANTOMJS_VERSION_STRING));
+        Terminal::instance()->cout(QString("%1").arg(chromessJS_VERSION_STRING));
         return;
     }
 
@@ -145,49 +145,49 @@ void Phantom::init()
 }
 
 // public:
-Phantom* Phantom::instance()
+chromess* chromess::instance()
 {
-    if (NULL == phantomInstance) {
-        phantomInstance = new Phantom();
-        phantomInstance->init();
+    if (NULL == chromessInstance) {
+        chromessInstance = new chromess();
+        chromessInstance->init();
     }
-    return phantomInstance;
+    return chromessInstance;
 }
 
-Phantom::~Phantom()
+chromess::~chromess()
 {
     // Nothing to do: cleanup is handled by QObject relationships
 }
 
-QVariantMap Phantom::defaultPageSettings() const
+QVariantMap chromess::defaultPageSettings() const
 {
     return m_defaultPageSettings;
 }
 
-QString Phantom::outputEncoding() const
+QString chromess::outputEncoding() const
 {
     return Terminal::instance()->getEncoding();
 }
 
-void Phantom::setOutputEncoding(const QString& encoding)
+void chromess::setOutputEncoding(const QString& encoding)
 {
     Terminal::instance()->setEncoding(encoding);
 }
 
-bool Phantom::execute()
+bool chromess::execute()
 {
     if (m_terminated) {
         return false;
     }
 
 #ifndef QT_NO_DEBUG_OUTPUT
-    qDebug() << "Phantom - execute: Configuration";
+    qDebug() << "chromess - execute: Configuration";
     const QMetaObject* configMetaObj = m_config.metaObject();
     for (int i = 0, ilen = configMetaObj->propertyCount(); i < ilen; ++i) {
         qDebug() << "    " << i << configMetaObj->property(i).name() << ":" << m_config.property(configMetaObj->property(i).name()).toString();
     }
 
-    qDebug() << "Phantom - execute: Script & Arguments";
+    qDebug() << "chromess - execute: Script & Arguments";
     qDebug() << "    " << "script:" << m_config.scriptFile();
     QStringList args = m_config.scriptArgs();
     for (int i = 0, ilen = args.length(); i < ilen; ++i) {
@@ -196,14 +196,14 @@ bool Phantom::execute()
 #endif
 
     if (m_config.isWebdriverMode()) {                                   // Remote WebDriver mode requested
-        qDebug() << "Phantom - execute: Starting Remote WebDriver mode";
+        qDebug() << "chromess - execute: Starting Remote WebDriver mode";
 
         if (!Utils::injectJsInFrame(":/ghostdriver/main.js", QString(), m_scriptFileEnc, QDir::currentPath(), m_page->mainFrame(), true)) {
             m_returnValue = -1;
             return false;
         }
     } else if (m_config.scriptFile().isEmpty()) {                       // REPL mode requested
-        qDebug() << "Phantom - execute: Starting REPL mode";
+        qDebug() << "chromess - execute: Starting REPL mode";
 
         // REPL is only valid for javascript
         const QString& scriptLanguage = m_config.scriptLanguage();
@@ -217,7 +217,7 @@ bool Phantom::execute()
         // Create the REPL: it will launch itself, no need to store this variable.
         REPL::getInstance(m_page->mainFrame(), this);
     } else {                                                            // Load the User Script
-        qDebug() << "Phantom - execute: Starting normal mode";
+        qDebug() << "chromess - execute: Starting normal mode";
 
         if (m_config.debug()) {
             // Debug enabled
@@ -241,51 +241,51 @@ bool Phantom::execute()
     return !m_terminated;
 }
 
-int Phantom::returnValue() const
+int chromess::returnValue() const
 {
     return m_returnValue;
 }
 
-QString Phantom::libraryPath() const
+QString chromess::libraryPath() const
 {
     return m_page->libraryPath();
 }
 
-void Phantom::setLibraryPath(const QString& libraryPath)
+void chromess::setLibraryPath(const QString& libraryPath)
 {
     m_page->setLibraryPath(libraryPath);
 }
 
-QVariantMap Phantom::version() const
+QVariantMap chromess::version() const
 {
     QVariantMap result;
-    result["major"] = PHANTOMJS_VERSION_MAJOR;
-    result["minor"] = PHANTOMJS_VERSION_MINOR;
-    result["patch"] = PHANTOMJS_VERSION_PATCH;
+    result["major"] = chromessJS_VERSION_MAJOR;
+    result["minor"] = chromessJS_VERSION_MINOR;
+    result["patch"] = chromessJS_VERSION_PATCH;
     return result;
 }
 
-QObject* Phantom::page() const
+QObject* chromess::page() const
 {
     return m_page;
 }
 
-Config* Phantom::config()
+Config* chromess::config()
 {
     return &m_config;
 }
 
-bool Phantom::printDebugMessages() const
+bool chromess::printDebugMessages() const
 {
     return m_config.printDebugMessages();
 }
 
-bool Phantom::areCookiesEnabled() const
+bool chromess::areCookiesEnabled() const
 {
     return m_defaultCookieJar->isEnabled();
 }
 
-void Phantom::setCookiesEnabled(const bool value)
+void chromess::setCookiesEnabled(const bool value)
 {
     if (value) {
         m_defaultCookieJar->enable();
@@ -294,18 +294,18 @@ void Phantom::setCookiesEnabled(const bool value)
     }
 }
 
-bool Phantom::webdriverMode() const
+bool chromess::webdriverMode() const
 {
     return m_config.isWebdriverMode();
 }
 
 // public slots:
-QObject* Phantom::createCookieJar(const QString& filePath)
+QObject* chromess::createCookieJar(const QString& filePath)
 {
     return new CookieJar(filePath, this);
 }
 
-QObject* Phantom::createWebPage()
+QObject* chromess::createWebPage()
 {
     WebPage* page = new WebPage(this);
     page->setCookieJar(m_defaultCookieJar);
@@ -323,14 +323,14 @@ QObject* Phantom::createWebPage()
     return page;
 }
 
-QObject* Phantom::createWebServer()
+QObject* chromess::createWebServer()
 {
     WebServer* server = new WebServer(this);
     m_servers.append(server);
     return server;
 }
 
-QObject* Phantom::createFilesystem()
+QObject* chromess::createFilesystem()
 {
     if (!m_filesystem) {
         m_filesystem = new FileSystem(this);
@@ -339,7 +339,7 @@ QObject* Phantom::createFilesystem()
     return m_filesystem;
 }
 
-QObject* Phantom::createSystem()
+QObject* chromess::createSystem()
 {
     if (!m_system) {
         m_system = new System(this);
@@ -353,7 +353,7 @@ QObject* Phantom::createSystem()
     return m_system;
 }
 
-QObject* Phantom::_createChildProcess()
+QObject* chromess::_createChildProcess()
 {
     if (!m_childprocess) {
         m_childprocess = new ChildProcess(this);
@@ -362,12 +362,12 @@ QObject* Phantom::_createChildProcess()
     return m_childprocess;
 }
 
-QObject* Phantom::createCallback()
+QObject* chromess::createCallback()
 {
     return new Callback(this);
 }
 
-void Phantom::loadModule(const QString& moduleSource, const QString& filename)
+void chromess::loadModule(const QString& moduleSource, const QString& filename)
 {
     if (m_terminated) {
         return;
@@ -384,15 +384,15 @@ void Phantom::loadModule(const QString& moduleSource, const QString& filename)
     m_page->mainFrame()->evaluateJavaScript(scriptSource, QString(JAVASCRIPT_SOURCE_PLATFORM_URL).arg(QFileInfo(filename).fileName()));
 }
 
-bool Phantom::injectJs(const QString& jsFilePath)
+bool chromess::injectJs(const QString& jsFilePath)
 {
     QString pre = "";
-    qDebug() << "Phantom - injectJs:" << jsFilePath;
+    qDebug() << "chromess - injectJs:" << jsFilePath;
 
     // If in Remote Webdriver Mode, we need to manipulate the PATH, to point it to a resource in `ghostdriver.qrc`
     if (webdriverMode()) {
         pre = ":/ghostdriver/";
-        qDebug() << "Phantom - injectJs: prepending" << pre;
+        qDebug() << "chromess - injectJs: prepending" << pre;
     }
 
     if (m_terminated) {
@@ -402,7 +402,7 @@ bool Phantom::injectJs(const QString& jsFilePath)
     return Utils::injectJsInFrame(pre + jsFilePath, libraryPath(), m_page->mainFrame());
 }
 
-void Phantom::setProxy(const QString& ip, const qint64& port, const QString& proxyType, const QString& user, const QString& password)
+void chromess::setProxy(const QString& ip, const qint64& port, const QString& proxyType, const QString& user, const QString& password)
 {
     qDebug() << "Set " << proxyType << " proxy to: " << ip << ":" << port;
     if (ip.isEmpty()) {
@@ -424,7 +424,7 @@ void Phantom::setProxy(const QString& ip, const qint64& port, const QString& pro
     }
 }
 
-QString Phantom::proxy()
+QString chromess::proxy()
 {
     QNetworkProxy proxy = QNetworkProxy::applicationProxy();
     if (proxy.hostName().isEmpty()) {
@@ -433,26 +433,26 @@ QString Phantom::proxy()
     return proxy.hostName() + ":" + QString::number(proxy.port());
 }
 
-int Phantom::remoteDebugPort() const
+int chromess::remoteDebugPort() const
 {
     return m_config.remoteDebugPort();
 }
 
-void Phantom::exit(int code)
+void chromess::exit(int code)
 {
     if (m_config.debug()) {
-        Terminal::instance()->cout("Phantom::exit() called but not quitting in debug mode.");
+        Terminal::instance()->cout("chromess::exit() called but not quitting in debug mode.");
     } else {
         doExit(code);
     }
 }
 
-void Phantom::debugExit(int code)
+void chromess::debugExit(int code)
 {
     doExit(code);
 }
 
-QString Phantom::resolveRelativeUrl(QString url, QString base)
+QString chromess::resolveRelativeUrl(QString url, QString base)
 {
     QUrl u = QUrl::fromEncoded(url.toLatin1());
     QUrl b = QUrl::fromEncoded(base.toLatin1());
@@ -460,30 +460,30 @@ QString Phantom::resolveRelativeUrl(QString url, QString base)
     return b.resolved(u).toEncoded();
 }
 
-QString Phantom::fullyDecodeUrl(QString url)
+QString chromess::fullyDecodeUrl(QString url)
 {
     return QUrl::fromEncoded(url.toLatin1()).toDisplayString();
 }
 
 // private slots:
-void Phantom::printConsoleMessage(const QString& message)
+void chromess::printConsoleMessage(const QString& message)
 {
     Terminal::instance()->cout(message);
 }
 
-void Phantom::onInitialized()
+void chromess::onInitialized()
 {
-    // Add 'phantom' object to the global scope
-    m_page->mainFrame()->addToJavaScriptWindowObject("phantom", this);
+    // Add 'chromess' object to the global scope
+    m_page->mainFrame()->addToJavaScriptWindowObject("chromess", this);
 
-    // Bootstrap the PhantomJS scope
+    // Bootstrap the chromessJS scope
     m_page->mainFrame()->evaluateJavaScript(
         Utils::readResourceFileUtf8(":/bootstrap.js"),
         QString(JAVASCRIPT_SOURCE_PLATFORM_URL).arg("bootstrap.js")
     );
 }
 
-bool Phantom::setCookies(const QVariantList& cookies)
+bool chromess::setCookies(const QVariantList& cookies)
 {
     // Delete all the cookies from the CookieJar
     m_defaultCookieJar->clearCookies();
@@ -491,18 +491,18 @@ bool Phantom::setCookies(const QVariantList& cookies)
     return m_defaultCookieJar->addCookiesFromMap(cookies);
 }
 
-QVariantList Phantom::cookies() const
+QVariantList chromess::cookies() const
 {
     // Return all the Cookies in the CookieJar, as a list of Maps (aka JSON in JS space)
     return m_defaultCookieJar->cookiesToMap();
 }
 
-bool Phantom::addCookie(const QVariantMap& cookie)
+bool chromess::addCookie(const QVariantMap& cookie)
 {
     return m_defaultCookieJar->addCookieFromMap(cookie);
 }
 
-bool Phantom::deleteCookie(const QString& cookieName)
+bool chromess::deleteCookie(const QString& cookieName)
 {
     if (!cookieName.isEmpty()) {
         return m_defaultCookieJar->deleteCookie(cookieName);
@@ -510,14 +510,14 @@ bool Phantom::deleteCookie(const QString& cookieName)
     return false;
 }
 
-void Phantom::clearCookies()
+void chromess::clearCookies()
 {
     m_defaultCookieJar->clearCookies();
 }
 
 
 // private:
-void Phantom::doExit(int code)
+void chromess::doExit(int code)
 {
     emit aboutToExit(code);
     m_terminated = true;

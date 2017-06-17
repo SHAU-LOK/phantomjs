@@ -26,7 +26,7 @@ page.open('http://test262.ecmascript.org/', function() {
 
         if (data.progress.indexOf('complete') > 0) {
             page.render('report.png');
-            phantom.exit();
+            chromess.exit();
         } else {
             setTimeout(monitor, 1000);
         }

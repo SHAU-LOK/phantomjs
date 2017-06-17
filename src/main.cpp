@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
 
@@ -29,7 +29,7 @@
 #include "consts.h"
 #include "utils.h"
 #include "env.h"
-#include "phantom.h"
+#include "chromess.h"
 #include "crashdump.h"
 
 #include <QApplication>
@@ -43,11 +43,11 @@ static int inner_main(int argc, char** argv)
 {
     QApplication app(argc, argv);
 
-    app.setWindowIcon(QIcon(":/phantomjs-icon.png"));
-    app.setApplicationName("PhantomJS");
+    app.setWindowIcon(QIcon(":/chromessjs-icon.png"));
+    app.setApplicationName("chromessJS");
     app.setOrganizationName("Ofi Labs");
     app.setOrganizationDomain("www.ofilabs.com");
-    app.setApplicationVersion(PHANTOMJS_VERSION_STRING);
+    app.setApplicationVersion(chromessJS_VERSION_STRING);
 
     // Registering an alternative Message Handler
     qInstallMessageHandler(Utils::messageHandler);
@@ -59,18 +59,18 @@ static int inner_main(int argc, char** argv)
     }
 #endif
 
-    // Get the Phantom singleton
-    Phantom* phantom = Phantom::instance();
+    // Get the chromess singleton
+    chromess* chromess = chromess::instance();
 
     // Start script execution
-    if (phantom->execute()) {
+    if (chromess->execute()) {
         app.exec();
     }
 
-    // End script execution: delete the phantom singleton and set
+    // End script execution: delete the chromess singleton and set
     // execution return value
-    int retVal = phantom->returnValue();
-    delete phantom;
+    int retVal = chromess->returnValue();
+    delete chromess;
     return retVal;
 }
 

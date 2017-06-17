@@ -1,6 +1,6 @@
 async_test(function () {
     // This loads the same page as https-bad-cert.js; by default the
-    // test suite tells PhantomJS to trust the snakeoil certificate
+    // test suite tells chromessJS to trust the snakeoil certificate
     // that the test HTTPS server uses, so it should succeed.
 
     var page = require('webpage').create();

@@ -5,12 +5,12 @@ var page = require('webpage').create(),
 
 if (system.args.length < 4) {
     console.log('Usage: openurlwithproxy.js <proxyHost> <proxyPort> <URL>');
-    phantom.exit(1);
+    chromess.exit(1);
 } else {
     host = system.args[1];
     port = system.args[2];
     address = system.args[3];
-    phantom.setProxy(host, port, 'manual', '', '');
+    chromess.setProxy(host, port, 'manual', '', '');
     page.open(address, function (status) {
         if (status !== 'success') {
             console.log('FAIL to load the address "' +
@@ -20,6 +20,6 @@ if (system.args.length < 4) {
                 return document.title;
             }));
         }
-        phantom.exit();
+        chromess.exit();
     });
 }

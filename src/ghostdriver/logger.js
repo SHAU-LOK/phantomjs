@@ -100,7 +100,7 @@ exports.addLogFile = function(logFileName) {
     });
 
     // Flush the Log File when process exits
-    phantom.aboutToExit.connect(f.flush);
+    chromess.aboutToExit.connect(f.flush);
 };
 
 /**

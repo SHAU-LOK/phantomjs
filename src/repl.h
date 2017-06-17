@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
 
@@ -32,7 +32,7 @@
 
 #include <QtWebKitWidgets/QWebFrame>
 
-#include "phantom.h"
+#include "chromess.h"
 
 // Linenoise is a C Library: we need to externalise it's symbols for linkage
 extern "C" {
@@ -42,8 +42,8 @@ extern "C" {
 /**
  * REPL. Read–Eval–Print Loop.
  *
- * This class realises the REPL functionality within PhantomJS.
- * It's a Singleton: invoke "REPL::getInstance(QWebFrame *, Phantom *) to
+ * This class realises the REPL functionality within chromessJS.
+ * It's a Singleton: invoke "REPL::getInstance(QWebFrame *, chromess *) to
  * create the first-and-only instance, or no parameter to get the singleton
  * if previously created.
  *
@@ -56,13 +56,13 @@ class REPL: public QObject
 
 public:
     static bool instanceExists();
-    static REPL* getInstance(QWebFrame* webframe = NULL, Phantom* parent = NULL);
+    static REPL* getInstance(QWebFrame* webframe = NULL, chromess* parent = NULL);
 
     Q_INVOKABLE QString _getClassName(QObject* obj) const;
     Q_INVOKABLE QStringList _enumerateCompletions(QObject* obj) const;
 
 private:
-    REPL(QWebFrame* webframe, Phantom* parent);
+    REPL(QWebFrame* webframe, chromess* parent);
     static void offerCompletion(const char* buf, linenoiseCompletions* lc);
 
 private slots:
@@ -71,7 +71,7 @@ private slots:
 
 private:
     QWebFrame* m_webframe;
-    Phantom* m_parentPhantom;
+    chromess* m_parentchromess;
     bool m_looping;
     QByteArray m_historyFilepath;
 };

@@ -1,8 +1,8 @@
 /* vim: set expandtab shiftwidth=4 tabstop=4: */
-/*global require, phantom, setTimeout, clearTimeout */
+/*global require, chromess, setTimeout, clearTimeout */
 
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright 2015 Zachary Weinberg <zackw@panix.com>
 
@@ -42,7 +42,7 @@
 /** Public API: Defining and running tests.
  *
  *  Compared to the W3C testharness.js, a number of minor changes have
- *  been made to fit the rather different PhantomJS controller
+ *  been made to fit the rather different chromessJS controller
  *  environment, but the basic API is the same.
  */
 
@@ -949,7 +949,7 @@ function Tests(output) {
     this.output = output;
 
     var this_obj = this;
-    phantom.onError = function (message, stack) {
+    chromess.onError = function (message, stack) {
         if (!tests.allow_uncaught_exception) {
             this_obj.output.error(message);
         }
@@ -957,7 +957,7 @@ function Tests(output) {
             this_obj.complete();
         }
     };
-    phantom.page.onConsoleMessage = function (message) {
+    chromess.page.onConsoleMessage = function (message) {
         if (!tests.allow_uncaught_exception) {
             this_obj.output.error("stray console message: " + message);
         }
@@ -1116,7 +1116,7 @@ Tests.prototype.complete = function complete() {
 
 /*
  * The Output object is responsible for reporting the status of each
- * test.  For PhantomJS, output is much simpler than for the W3C
+ * test.  For chromessJS, output is much simpler than for the W3C
  * harness; we basically just log things to the console as
  * appropriate.  The output format is meant to be compatible with
  * TAP (http://testanything.org/tap-specification.html).
@@ -1179,7 +1179,7 @@ Output.prototype.result = function result(test) {
 };
 
 Output.prototype.complete = function complete(tests) {
-    phantom.exit(this.failed ? 1 : 0);
+    chromess.exit(this.failed ? 1 : 0);
 };
 
 /*
@@ -1459,17 +1459,17 @@ var args = process_command_line(sys);
 
 if (args.test_script === "") {
     // process_command_line has already issued an error message.
-    phantom.exit(2);
+    chromess.exit(2);
 } else {
     // Reset the library paths for injectJs and require to the
     // directory containing the test script, so relative imports work
-    // as expected.  Unfortunately, phantom.libraryPath is not a
+    // as expected.  Unfortunately, chromess.libraryPath is not a
     // proper search path -- it can only hold one directory at a time.
     // require.paths has no such limitation.
     var test_script = fs.absolute(args.test_script);
-    phantom.libraryPath = test_script.slice(0,
+    chromess.libraryPath = test_script.slice(0,
         test_script.lastIndexOf(fs.separator));
-    require.paths.push(phantom.libraryPath);
+    require.paths.push(chromess.libraryPath);
 
     // run-tests.py sets these environment variables to the base URLs
     // of its HTTP and HTTPS servers.
@@ -1481,7 +1481,7 @@ if (args.test_script === "") {
 
     // This evaluates the test script synchronously.
     // Any errors should be caught by our onError hook.
-    phantom.injectJs(test_script);
+    chromess.injectJs(test_script);
 
     tests.begin();
 }

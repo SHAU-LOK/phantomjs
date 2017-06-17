@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -28,8 +28,8 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef PHANTOM_H
-#define PHANTOM_H
+#ifndef chromess_H
+#define chromess_H
 
 #include <QPointer>
 
@@ -44,7 +44,7 @@ class WebPage;
 class CustomPage;
 class WebServer;
 
-class Phantom : public QObject
+class chromess : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QVariantMap defaultPageSettings READ defaultPageSettings)
@@ -58,13 +58,13 @@ class Phantom : public QObject
     Q_PROPERTY(int remoteDebugPort READ remoteDebugPort)
 
 private:
-    // Private constructor: the Phantom class is a singleton
-    Phantom(QObject* parent = 0);
+    // Private constructor: the chromess class is a singleton
+    chromess(QObject* parent = 0);
     void init();
 
 public:
-    static Phantom* instance();
-    virtual ~Phantom();
+    static chromess* instance();
+    virtual ~chromess();
 
     QVariantMap defaultPageSettings() const;
 
@@ -241,4 +241,4 @@ private:
     friend class CustomPage;
 };
 
-#endif // PHANTOM_H
+#endif // chromess_H

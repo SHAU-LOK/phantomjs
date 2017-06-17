@@ -8,7 +8,7 @@ var page = require('webpage').create(),
 
 if (system.args.length !== 2) {
     console.log('Usage: postserver.js <portnumber>');
-    phantom.exit(1);
+    chromess.exit(1);
 }
 
 var port = system.args[1];
@@ -31,5 +31,5 @@ page.open('http://localhost:' + port + '/', 'post', data, function (status) {
     } else {
         console.log(page.plainText);
     }
-    phantom.exit();
+    chromess.exit();
 });

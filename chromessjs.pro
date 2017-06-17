@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS += src/phantomjs.pro
+SUBDIRS += src/chromessjs.pro

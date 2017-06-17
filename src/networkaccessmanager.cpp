@@ -1,5 +1,5 @@
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -39,7 +39,7 @@
 #include <QSslKey>
 #include <QRegExp>
 
-#include "phantom.h"
+#include "chromess.h"
 #include "config.h"
 #include "cookiejar.h"
 #include "networkaccessmanager.h"
@@ -295,11 +295,11 @@ void NetworkAccessManager::setCookieJar(QNetworkCookieJar* cookieJar)
 {
     QNetworkAccessManager::setCookieJar(cookieJar);
     // Remove NetworkAccessManager's ownership of this CookieJar and
-    // pass it to the PhantomJS Singleton object.
+    // pass it to the chromessJS Singleton object.
     // CookieJar is shared between multiple instances of NetworkAccessManager.
     // It shouldn't be deleted when the NetworkAccessManager is deleted, but
     // only when close is called on the cookie jar.
-    cookieJar->setParent(Phantom::instance());
+    cookieJar->setParent(chromess::instance());
 }
 
 // protected:
@@ -321,7 +321,7 @@ QNetworkReply* NetworkAccessManager::createRequest(Operation op, const QNetworkR
     QByteArray url = req.url().toEncoded();
     QByteArray postData;
 
-    // http://code.google.com/p/phantomjs/issues/detail?id=337
+    // http://code.google.com/p/chromessjs/issues/detail?id=337
     if (op == QNetworkAccessManager::PostOperation) {
         if (outgoingData) { postData = outgoingData->peek(MAX_REQUEST_POST_BODY_SIZE); }
         QString contentType = req.header(QNetworkRequest::ContentTypeHeader).toString();

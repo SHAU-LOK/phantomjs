@@ -30,16 +30,16 @@ package ghostdriver;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.chromessjs.chromessJSDriverService;
 
 import static org.junit.Assert.assertTrue;
 
 public class NavigationTest extends BaseTest {
     @BeforeClass
-    public static void setUserAgentForPhantomJSDriver() {
+    public static void setUserAgentForchromessJSDriver() {
         // Setting a generic Chrome UA to bypass some UA spoofing
         sCaps.setCapability(
-                PhantomJSDriverService.PHANTOMJS_PAGE_SETTINGS_PREFIX + "userAgent",
+                chromessJSDriverService.chromessJS_PAGE_SETTINGS_PREFIX + "userAgent",
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11"
         );
     }
@@ -82,7 +82,7 @@ public class NavigationTest extends BaseTest {
 
     @Test
     public void navigateToNameJet() {
-        // NOTE: This passes only when the User Agent is NOT PhantomJS {@see setUserAgentForPhantomJSDriver}
+        // NOTE: This passes only when the User Agent is NOT chromessJS {@see setUserAgentForchromessJSDriver}
         // method above.
         WebDriver d = getDriver();
         d.navigate().to("http://www.namejet.com/");

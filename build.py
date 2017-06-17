@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-#  This file is part of the PhantomJS project from Ofi Labs.
+#  This file is part of the chromessJS project from Ofi Labs.
 #
 #  Copyright (C) 2014 Milian Wolff, KDAB <milian.wolff@kdab.com>
 #
@@ -94,7 +94,7 @@ def findThirdPartyDeps():
         lib_dirs.append(os.path.join(third_party_path, dep, "lib"))
     return (include_dirs, lib_dirs)
 
-class PhantomJSBuilder(object):
+class chromessJSBuilder(object):
     options = {}
     makeCommand = []
 
@@ -177,7 +177,7 @@ class PhantomJSBuilder(object):
             # Unix platform options
             platformOptions = [
                 # use the headless QPA platform
-                "-qpa", "phantom",
+                "-qpa", "chromess",
                 # explicitly compile with SSL support, so build will fail if headers are missing
                 "-openssl", "-openssl-linked",
                 # disable unnecessary Qt features
@@ -334,14 +334,14 @@ class PhantomJSBuilder(object):
         if self.make("src/qt/qtwebkit") != 0:
             raise RuntimeError("Building Qt WebKit failed.")
 
-    # build PhantomJS
-    def buildPhantomJS(self):
-        print("Configuring PhantomJS, please wait...")
-        if self.qmake(".", self.options.phantomjs_qmake_args) != 0:
-            raise RuntimeError("Configuration of PhantomJS failed.")
-        print("Building PhantomJS, please wait...")
+    # build chromessJS
+    def buildchromessJS(self):
+        print("Configuring chromessJS, please wait...")
+        if self.qmake(".", self.options.chromessjs_qmake_args) != 0:
+            raise RuntimeError("Configuration of chromessJS failed.")
+        print("Building chromessJS, please wait...")
         if self.make(".") != 0:
-            raise RuntimeError("Building PhantomJS failed.")
+            raise RuntimeError("Building chromessJS failed.")
 
     # ensure the git submodules are all available
     def ensureSubmodulesAvailable(self):
@@ -351,16 +351,16 @@ class PhantomJSBuilder(object):
         if self.execute(["git", "submodule", "update", "--init"], ".") != 0:
             raise RuntimeError("Initial update of git submodules failed.")
 
-    # run all build steps required to get a final PhantomJS binary at the end
+    # run all build steps required to get a final chromessJS binary at the end
     def run(self):
         self.ensureSubmodulesAvailable();
         self.buildQtBase()
         self.buildQtWebKit()
-        self.buildPhantomJS()
+        self.buildchromessJS()
 
 # parse command line arguments and return the result
 def parseArguments():
-    parser = argparse.ArgumentParser(description="Build PhantomJS from sources.")
+    parser = argparse.ArgumentParser(description="Build chromessJS from sources.")
     parser.add_argument("-r", "--release", action="store_true",
                             help="Enable compiler optimizations.")
     parser.add_argument("-d", "--debug", action="store_true",
@@ -382,8 +382,8 @@ def parseArguments():
                             help="Additional arguments that will be passed to all QMake calls.")
     advanced.add_argument("--webkit-qmake-args", type=str, action="append",
                             help="Additional arguments that will be passed to the Qt WebKit QMake call.")
-    advanced.add_argument("--phantomjs-qmake-args", type=str, action="append",
-                            help="Additional arguments that will be passed to the PhantomJS QMake call.")
+    advanced.add_argument("--chromessjs-qmake-args", type=str, action="append",
+                            help="Additional arguments that will be passed to the chromessJS QMake call.")
     advanced.add_argument("--qt-config", type=str, action="append",
                             help="Additional arguments that will be passed to Qt Base configure.")
     advanced.add_argument("--git-clean-qtbase", action="store_true",
@@ -429,28 +429,28 @@ def main():
                WARNING
 ----------------------------------------
 
-Building PhantomJS from source takes a very long time, anywhere from 30 minutes
+Building chromessJS from source takes a very long time, anywhere from 30 minutes
 to several hours (depending on the machine configuration). It is recommended to
 use the premade binary packages on supported operating systems.
 
-For details, please go the the web site: http://phantomjs.org/download.html.
+For details, please go the the web site: http://chromessjs.org/download.html.
 """)
             while True:
                 sys.stdout.write("Do you want to continue (Y/n)? ")
                 sys.stdout.flush()
                 answer = sys.stdin.readline().strip().lower()
                 if answer == "n":
-                    print("Cancelling PhantomJS build.")
+                    print("Cancelling chromessJS build.")
                     return
                 elif answer == "y" or answer == "":
                     break
                 else:
                     print("Invalid answer, try again.")
 
-        builder = PhantomJSBuilder(options)
+        builder = chromessJSBuilder(options)
         builder.run()
     except RuntimeError as error:
-        sys.stderr.write("\nERROR: Failed to build PhantomJS! %s\n" % error)
+        sys.stderr.write("\nERROR: Failed to build chromessJS! %s\n" % error)
         sys.stderr.flush()
         sys.exit(1)
 

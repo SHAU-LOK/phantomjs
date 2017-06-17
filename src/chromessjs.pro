@@ -4,13 +4,13 @@ if(!equals(QT_MAJOR_VERSION, 5)|!equals(QT_MINOR_VERSION, 5)) {
 }
 
 TEMPLATE = app
-TARGET = phantomjs
+TARGET = chromessjs
 QT += network webkitwidgets
 CONFIG += console
 
 DESTDIR = ../bin
 
-RESOURCES = phantomjs.qrc \
+RESOURCES = chromessjs.qrc \
     ghostdriver/ghostdriver.qrc
 
 win32 {
@@ -20,7 +20,7 @@ win32 {
 }
 
 HEADERS += \
-    phantom.h \
+    chromess.h \
     callback.h \
     webpage.h \
     webserver.h \
@@ -38,7 +38,7 @@ HEADERS += \
     repl.h \
     crashdump.h
 
-SOURCES += phantom.cpp \
+SOURCES += chromess.cpp \
     callback.cpp \
     webpage.cpp \
     webserver.cpp \
@@ -70,8 +70,8 @@ include(mongoose/mongoose.pri)
 include(linenoise/linenoise.pri)
 include(qcommandline/qcommandline.pri)
 
-win32: RC_FILE = phantomjs_win.rc
-os2:   RC_FILE = phantomjs_os2.rc
+win32: RC_FILE = chromessjs_win.rc
+os2:   RC_FILE = chromessjs_os2.rc
 
 mac {
     QMAKE_CXXFLAGS += -fvisibility=hidden

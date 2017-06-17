@@ -1,7 +1,7 @@
-Packaging PhantomJS
+Packaging chromessJS
 ===================
 
-This directory contains various scripts to assist with making PhantomJS
+This directory contains various scripts to assist with making chromessJS
 packages.
 
 Packaging for Linux
@@ -14,7 +14,7 @@ for instructions on installing Docker. For OS X or Windows host,
 please use [Docker Toolbox](https://www.docker.com/docker-toolbox).
 
 Once you have Docker installed, run these commands from the top level
-of the PhantomJS source repository:
+of the chromessJS source repository:
 
 ```bash
  $ git clean -xfd .

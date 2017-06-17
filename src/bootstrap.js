@@ -1,8 +1,8 @@
 /*jslint sloppy: true, nomen: true */
-/*global window:true,phantom:true */
+/*global window:true,chromess:true */
 
 /*
-  This file is part of the PhantomJS project from Ofi Labs.
+  This file is part of the chromessJS project from Ofi Labs.
 
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
@@ -34,7 +34,7 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-phantom.__defineErrorSignalHandler__ = function(obj, page, handlers) {
+chromess.__defineErrorSignalHandler__ = function(obj, page, handlers) {
     var handlerName = 'onError';
 
     Object.defineProperty(obj, handlerName, {
@@ -79,11 +79,11 @@ phantom.__defineErrorSignalHandler__ = function(obj, page, handlers) {
 
 (function() {
     var handlers = {};
-    phantom.__defineErrorSignalHandler__(phantom, phantom.page, handlers);
+    chromess.__defineErrorSignalHandler__(chromess, chromess.page, handlers);
 })();
 
 // TODO: Make this output to STDERR
-phantom.defaultErrorHandler = function(message, stack) {
+chromess.defaultErrorHandler = function(message, stack) {
     console.log(message + "\n");
 
     stack.forEach(function(item) {
@@ -94,10 +94,10 @@ phantom.defaultErrorHandler = function(message, stack) {
     });
 };
 
-phantom.onError = phantom.defaultErrorHandler;
+chromess.onError = chromess.defaultErrorHandler;
 
-phantom.callback = function(callback) {
-    var ret = phantom.createCallback();
+chromess.callback = function(callback) {
+    var ret = chromess.createCallback();
     ret.called.connect(function(args) {
         var retVal = callback.apply(this, args);
         ret.returnValue = retVal;
@@ -116,9 +116,9 @@ phantom.callback = function(callback) {
     // use getters to initialize lazily
     // (for future, now both fs and system are loaded anyway)
     var nativeExports = {
-        get fs() { return phantom.createFilesystem(); },
-        get child_process() { return phantom._createChildProcess(); },
-        get system() { return phantom.createSystem(); }
+        get fs() { return chromess.createFilesystem(); },
+        get child_process() { return chromess._createChildProcess(); },
+        get system() { return chromess.createSystem(); }
     };
     var extensions = {
         '.js': function(module, filename) {
@@ -217,11 +217,11 @@ phantom.callback = function(callback) {
         var _paths = [], dir;
 
         if (request[0] === '.') {
-            _paths.push(fs.absolute(joinPath(phantom.webdriverMode ? ":/ghostdriver" : this.dirname, request)));
+            _paths.push(fs.absolute(joinPath(chromess.webdriverMode ? ":/ghostdriver" : this.dirname, request)));
         } else if (fs.isAbsolute(request)) {
             _paths.push(fs.absolute(request));
         } else {
-            // first look in PhantomJS modules
+            // first look in chromessJS modules
             _paths.push(joinPath(':/modules', request));
             // then look in node_modules directories
             if (!this._isNative()) {
@@ -279,7 +279,7 @@ phantom.callback = function(callback) {
     };
 
     Module.prototype._compile = function(code) {
-        phantom.loadModule(code, this.filename);
+        chromess.loadModule(code, this.filename);
     };
 
     Module.prototype.require = function(request) {
@@ -317,7 +317,7 @@ phantom.callback = function(callback) {
         var cwd, mainFilename, mainModule = new Module();
         window.require = mainModule._getRequire();
         fs = loadFs();
-        cwd = fs.absolute(phantom.libraryPath);
+        cwd = fs.absolute(chromess.libraryPath);
         mainFilename = joinPath(cwd, basename(require('system').args[0]) || 'repl');
         mainModule._setFilename(mainFilename);
     }());
