@@ -36,25 +36,25 @@ page.open(url, function (status) {
         // location.href = "http://example.com";
         // page is redirecting.
         namePrefixDrop.value = 'Mr.';
-        firstName.value = 'yang';
-        lastName.value = 'zhengsu';
+        firstName.value = 'yasng';
+        lastName.value = 'zhesngsu';
 
         countryCode.value = 'CN';
-        streetAddress1.value = 'city one road ,tianjin';
+        streetAddress1.value = 'city one road ';
         city.value = 'beijing';
         stateProvince.value = 'CN11';
         stateProvince_onChange(stateProvince);
-        zipCode.value = '510000';
+        zipCode.value = '51000';
 
 
         phoneType0.value = 'home';
         phoneCountryCodeDd0.value = 'CN';
         smsTextPrefShow();
-        asTypedPhoneNumber0.value = '18392768392';
+        asTypedPhoneNumber0.value = '18392728392';
 
         enrollStep1Email.value = '432823890@qq.com';
 
-        userID.value = 'beifuewei';
+        userID.value = 'beifds123';
         window['password-password'].value = '1qaz@WSX1qaX';
         window['password-password4'].value = '1qaz@WSX1qaX';
     });
@@ -74,7 +74,7 @@ page.open(url, function (status) {
                 console.log('haha2');
             });
             page.render("page2.png");
-        }, 5000);
+        }, 10000);
 
-   }, 5000);
+   }, 10000);
 });
