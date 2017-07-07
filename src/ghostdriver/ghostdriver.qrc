@@ -22,7 +22,7 @@
         <file>third_party/webdriver-atoms/click.js</file>
         <file>third_party/webdriver-atoms/find_elements.js</file>
         <file>third_party/webdriver-atoms/execute_script.js</file>
-        <file>third_party/webdriver-atos/is_enabled.js</file>
+        <file>third_party/webdriver-atoms/is_enabled.js</file>
         <file>third_party/webdriver-atoms/is_selected.js</file>
         <file>third_party/webdriver-atoms/submit.js</file>
         <file>third_party/webdriver-atoms/is_content_editable.js</file>
