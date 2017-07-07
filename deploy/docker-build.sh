@@ -6,7 +6,7 @@ SOURCE_PATH=/src
 BUILD_PATH=$HOME/build
 
 # In case the old package URL is still being used
-sed -i 's/http\.debian\.net/httpredir\.debian\.org/g' /etc/apt/sources.list
+sed -i 's/deb.debian.org/mirror.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
 
 echo "Installing packages for development tools..." && sleep 1
 apt-get -y update
@@ -14,7 +14,7 @@ apt-get install -y build-essential git flex bison gperf python ruby git libfontc
 echo
 
 echo "Preparing to download Debian source package..."
-echo "deb-src http://httpredir.debian.org/debian wheezy main" >> /etc/apt/sources.list
+echo "deb-src http://mirror.tuna.tsinghua.edu.cn/debian wheezy main" >> /etc/apt/sources.list
 apt-get -y update
 echo
 
