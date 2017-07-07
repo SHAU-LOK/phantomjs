@@ -60,3 +60,5 @@ bin/
 *.class
 build/
 .gradle/
+.vscode
+
