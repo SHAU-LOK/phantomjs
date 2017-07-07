@@ -6,7 +6,12 @@ SOURCE_PATH=/src
 BUILD_PATH=$HOME/build
 
 # In case the old package URL is still being used
-sed -i 's/deb.debian.org/mirror.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
+#sed -i 's/deb.debian.org/mirror.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
+cat <<EOF > /etc/apt/sources.list
+deb http://mirror.tuna.tsinghua.edu.cn/debian wheezy main
+deb http://mirror.tuna.tsinghua.edu.cn/debian wheezy-updates main
+deb http://mirror.tuna.tsinghua.edu.cn/debian-security wheezy/updates main
+EOF
 
 echo "Installing packages for development tools..." && sleep 1
 apt-get -y update
