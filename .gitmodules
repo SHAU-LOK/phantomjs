@@ -1,12 +1,12 @@
 [submodule "qtbase"]
 	path = src/qt/qtbase
-	url = https://github.com/SHAU-LOK/qtbase.git
+	url = http://shau-lok@gitlab.toop.localdomain/toop/qtbase.git
 	branch = old_change_name
 [submodule "qtwebkit"]
 	path = src/qt/qtwebkit
-	url = https://github.com/SHAU-LOK/qtwebkit.git
+	url = http://shau-lok@gitlab.toop.localdomain/toop/qtwebkit.git
 	branch = change_old_name
 [submodule "3rdparty-win"]
 	path = src/qt/3rdparty
-	url = https://github.com/SHAU-LOK/phantomjs-3rdparty-win.git
+	url = http://shau-lok@gitlab.toop.localdomain/toop/phantomjs-3rdparty-win.git
 	branch = change_old_name
