@@ -8,9 +8,9 @@ BUILD_PATH=$HOME/build
 # In case the old package URL is still being used
 #sed -i 's/deb.debian.org/mirror.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
 cat <<EOF > /etc/apt/sources.list
-deb http://mirror.tuna.tsinghua.edu.cn/debian wheezy main
-deb http://mirror.tuna.tsinghua.edu.cn/debian wheezy-updates main
-deb http://mirror.tuna.tsinghua.edu.cn/debian-security wheezy/updates main
+deb http://mirrors.ustc.edu.cn/debian wheezy main
+deb http://mirrors.ustc.edu.cn/debian wheezy-updates main
+deb http://mirrors.ustc.edu.cn/debian-security wheezy/updates main
 EOF
 
 echo "Installing packages for development tools..." && sleep 1
@@ -19,7 +19,7 @@ apt-get install -y build-essential git flex bison gperf python ruby git libfontc
 echo
 
 echo "Preparing to download Debian source package..."
-echo "deb-src http://mirror.tuna.tsinghua.edu.cn/debian wheezy main" >> /etc/apt/sources.list
+echo "deb-src http://mirrors.ustc.edu.cn/debian wheezy main" >> /etc/apt/sources.list
 apt-get -y update
 echo
 
