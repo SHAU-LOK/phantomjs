@@ -307,6 +307,7 @@ QNetworkReply* NetworkAccessManager::createRequest(Operation op, const QNetworkR
 {
     QNetworkRequest req(request);
     QString scheme = req.url().scheme().toLower();
+    qDebug() << "Testing log in CreateRequest: -----> " << req.url();
 
     if (!QSslSocket::supportsSsl()) {
         if (scheme == QLatin1String("https")) {
@@ -355,6 +356,25 @@ QNetworkReply* NetworkAccessManager::createRequest(Operation op, const QNetworkR
     if (op == QNetworkAccessManager::PostOperation) { data["postData"] = postData.data(); }
     data["time"] = QDateTime::currentDateTime();
 
+    // Conig m_config = chromess::instance() -> m_config;
+    Config* chromessCfg = chromess::instance()->config();
+
+    if (req.url().path().contains(".js") || req.url().path().contains("mbox")) {
+        qDebug() << "matching JS File ---------> " << req.url() << chromessCfg;
+        QString jsProxyType = chromessCfg->jsProxyType();
+        if (jsProxyType != "none") {
+            chromess::instance()->setProxy(chromessCfg->jsProxyHost(), chromessCfg->jsProxyPort(), jsProxyType, chromessCfg->jsProxyAuthUser(), chromessCfg->jsProxyAuthPass()); 
+        }
+    } else {
+        QString jsProxyType = chromessCfg->jsProxyType();
+        if (jsProxyType != "none") {
+            QString proxyType = chromessCfg->proxyType();
+            if (proxyType != "none") {
+                chromess::instance()->setProxy(chromessCfg->proxyHost(), chromessCfg->proxyPort(), proxyType, chromessCfg->proxyAuthUser(), chromessCfg->proxyAuthPass());
+            } 
+        }
+   }
+
     JsNetworkRequest jsNetworkRequest(&req, this);
     emit resourceRequested(data, &jsNetworkRequest);
 
@@ -390,6 +410,16 @@ QNetworkReply* NetworkAccessManager::createRequest(Operation op, const QNetworkR
     connect(reply, SIGNAL(readyRead()), this, SLOT(handleStarted()));
     connect(reply, SIGNAL(sslErrors(const QList<QSslError>&)), this, SLOT(handleSslErrors(const QList<QSslError>&)));
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleNetworkError()));
+
+    if (req.url().path().contains(".js") || req.url().path().contains("mbox")) {
+        QString jsProxyType = chromessCfg->jsProxyType();
+        if (jsProxyType != "none") {
+            QString proxyType = chromessCfg->proxyType();
+            if (proxyType != "none") {
+                chromess::instance()->setProxy(chromessCfg->proxyHost(), chromessCfg->proxyPort(), proxyType, chromessCfg->proxyAuthUser(), chromessCfg->proxyAuthPass());
+            }
+        }
+    }
 
     return reply;
 }

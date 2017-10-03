@@ -67,6 +67,9 @@ static const struct QCommandLineConfigEntry flags[] = {
     { QCommandLine::Option, '\0', "proxy", "Sets the proxy server, e.g. '--proxy=http://proxy.company.com:8080'", QCommandLine::Optional },
     { QCommandLine::Option, '\0', "proxy-auth", "Provides authentication information for the proxy, e.g. ''-proxy-auth=username:password'", QCommandLine::Optional },
     { QCommandLine::Option, '\0', "proxy-type", "Specifies the proxy type, 'http' (default), 'none' (disable completely), or 'socks5'", QCommandLine::Optional },
+    { QCommandLine::Option, '\0', "js-proxy", "Sets the js file proxy server, e.g. '--proxy=http://proxy.company.com:8080'", QCommandLine::Optional },
+    { QCommandLine::Option, '\0', "js-proxy-auth", "Provides authentication information for the js file proxy, e.g. ''-proxy-auth=username:password'", QCommandLine::Optional },
+    { QCommandLine::Option, '\0', "js-proxy-type", "Specifies the js file proxy type, 'http' (default), 'none' (disable completely), or 'socks5'", QCommandLine::Optional },
     { QCommandLine::Option, '\0', "script-encoding", "Sets the encoding used for the starting script, default is 'utf8'", QCommandLine::Optional },
     { QCommandLine::Option, '\0', "script-language", "Sets the script language instead of detecting it: 'javascript'", QCommandLine::Optional },
     { QCommandLine::Option, '\0', "web-security", "Enables web security, 'true' (default) or 'false'", QCommandLine::Optional },
@@ -328,14 +331,29 @@ QString Config::proxyType() const
     return m_proxyType;
 }
 
+QString Config::jsProxyType() const
+{
+    return m_jsProxyType;
+}
+
 void Config::setProxyType(const QString& value)
 {
     m_proxyType = value;
 }
 
+void Config::setJsProxyType(const QString& value)
+{
+    m_jsProxyType = value;
+}
+
 QString Config::proxy() const
 {
     return m_proxyHost + ":" + QString::number(m_proxyPort);
+}
+
+QString Config::jsProxy() const
+{
+    return m_jsProxyHost + ":" + QString::number(m_jsProxyPort);
 }
 
 void Config::setProxy(const QString& value)
@@ -345,6 +363,16 @@ void Config::setProxy(const QString& value)
     if (proxyUrl.isValid()) {
         setProxyHost(proxyUrl.host());
         setProxyPort(proxyUrl.port(1080));
+    }
+}
+
+void Config::setJsProxy(const QString& value)
+{
+    QUrl proxyUrl = QUrl::fromUserInput(value);
+
+    if (proxyUrl.isValid()) {
+        setJsProxyHost(proxyUrl.host());
+        setJsProxyPort(proxyUrl.port(1080));
     }
 }
 
@@ -362,9 +390,28 @@ void Config::setProxyAuth(const QString& value)
     }
 }
 
+void Config::setJsProxyAuth(const QString& value)
+{
+    QString proxyUser = value;
+    QString proxyPass = "";
+
+    if (proxyUser.lastIndexOf(':') > 0) {
+        proxyPass = proxyUser.mid(proxyUser.lastIndexOf(':') + 1).trimmed();
+        proxyUser = proxyUser.left(proxyUser.lastIndexOf(':')).trimmed();
+
+        setJsProxyAuthUser(proxyUser);
+        setJsProxyAuthPass(proxyPass);
+    }
+}
+
 QString Config::proxyAuth() const
 {
     return proxyAuthUser() + ":" + proxyAuthPass();
+}
+
+QString Config::jsProxyAuth() const
+{
+    return jsProxyAuthUser() + ":" + jsProxyAuthPass();
 }
 
 QString Config::proxyAuthUser() const
@@ -372,9 +419,19 @@ QString Config::proxyAuthUser() const
     return m_proxyAuthUser;
 }
 
+QString Config::jsProxyAuthUser() const
+{
+    return m_jsProxyAuthUser;
+}
+
 QString Config::proxyAuthPass() const
 {
     return m_proxyAuthPass;
+}
+
+QString Config::jsProxyAuthPass() const
+{
+    return m_jsProxyAuthPass;
 }
 
 QString Config::proxyHost() const
@@ -382,9 +439,19 @@ QString Config::proxyHost() const
     return m_proxyHost;
 }
 
+QString Config::jsProxyHost() const
+{
+    return m_jsProxyHost;
+}
+
 int Config::proxyPort() const
 {
     return m_proxyPort;
+}
+
+int Config::jsProxyPort() const
+{
+    return m_jsProxyPort;
 }
 
 QStringList Config::scriptArgs() const
@@ -596,6 +663,11 @@ void Config::resetToDefaults()
     m_proxyPort = 1080;
     m_proxyAuthUser.clear();
     m_proxyAuthPass.clear();
+    m_jsProxyType = "http";
+    m_jsProxyHost.clear();
+    m_jsProxyPort = 1080;
+    m_jsProxyAuthUser.clear();
+    m_jsProxyAuthPass.clear();
     m_scriptArgs.clear();
     m_scriptEncoding = "UTF-8";
     m_scriptLanguage.clear();
@@ -659,6 +731,26 @@ void Config::setProxyHost(const QString& value)
 void Config::setProxyPort(const int value)
 {
     m_proxyPort = value;
+}
+
+void Config::setJsProxyAuthPass(const QString& value)
+{
+    m_jsProxyAuthPass = value;
+}
+
+void Config::setJsProxyAuthUser(const QString& value)
+{
+    m_jsProxyAuthUser = value;
+}
+
+void Config::setJsProxyHost(const QString& value)
+{
+    m_jsProxyHost = value;
+}
+
+void Config::setJsProxyPort(const int value)
+{
+    m_jsProxyPort = value;
 }
 
 bool Config::helpFlag() const
@@ -791,6 +883,18 @@ void Config::handleOption(const QString& option, const QVariant& value)
 
     if (option == "proxy-auth") {
         setProxyAuth(value.toString());
+    }
+
+    if (option == "js-proxy") {
+        setJsProxy(value.toString());
+    }
+
+    if (option == "js-proxy-type") {
+        setJsProxyType(value.toString());
+    }
+
+    if (option == "js-proxy-auth") {
+        setJsProxyAuth(value.toString());
     }
 
     if (option == "script-encoding") {

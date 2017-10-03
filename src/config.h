@@ -52,6 +52,9 @@ class Config: public QObject
     Q_PROPERTY(QString proxyType READ proxyType WRITE setProxyType)
     Q_PROPERTY(QString proxy READ proxy WRITE setProxy)
     Q_PROPERTY(QString proxyAuth READ proxyAuth WRITE setProxyAuth)
+    Q_PROPERTY(QString jsProxyType READ jsProxyType WRITE setJsProxyType)
+    Q_PROPERTY(QString jsProxy READ jsProxy WRITE setJsProxy)
+    Q_PROPERTY(QString jsProxyAuth READ jsProxyAuth WRITE setJsProxyAuth)
     Q_PROPERTY(QString scriptEncoding READ scriptEncoding WRITE setScriptEncoding)
     Q_PROPERTY(bool webSecurityEnabled READ webSecurityEnabled WRITE setWebSecurityEnabled)
     Q_PROPERTY(QString offlineStoragePath READ offlineStoragePath WRITE setOfflineStoragePath)
@@ -134,6 +137,22 @@ public:
     QString proxyAuthPass() const;
     void setProxyAuthUser(const QString& value);
     void setProxyAuthPass(const QString& value);
+
+    //js file proxy
+    QString jsProxyType() const;
+    void setJsProxyType(const QString& value);
+
+    QString jsProxy() const;
+    void setJsProxy(const QString& value);
+    QString jsProxyHost() const;
+    int jsProxyPort() const;
+
+    QString jsProxyAuth() const;
+    void setJsProxyAuth(const QString& value);
+    QString jsProxyAuthUser() const;
+    QString jsProxyAuthPass() const;
+    void setJsProxyAuthUser(const QString& value);
+    void setJsProxyAuthPass(const QString& value);
 
     QStringList scriptArgs() const;
     void setScriptArgs(const QStringList& value);
@@ -220,6 +239,10 @@ private:
     void setProxyPort(const int value);
     void setAuthUser(const QString& value);
     void setAuthPass(const QString& value);
+    void setJsProxyHost(const QString& value);
+    void setJsProxyPort(const int value);
+    void setJsAuthUser(const QString& value);
+    void setJsAuthPass(const QString& value);
 
     QCommandLine* m_cmdLine;
     bool m_autoLoadImages;
@@ -240,6 +263,11 @@ private:
     int m_proxyPort;
     QString m_proxyAuthUser;
     QString m_proxyAuthPass;
+    QString m_jsProxyType;
+    QString m_jsProxyHost;
+    int m_jsProxyPort;
+    QString m_jsProxyAuthUser;
+    QString m_jsProxyAuthPass;
     QStringList m_scriptArgs;
     QString m_scriptEncoding;
     QString m_scriptLanguage;
