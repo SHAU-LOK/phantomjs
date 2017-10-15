@@ -55,12 +55,18 @@ git submodule update
 python build.py
 ```
 
-## Document
+### Document
 
 [Command Line Interface](http://phantomjs.org/api/command-line.html)
 
 [Examples](http://phantomjs.org/examples/index.html)
 
 [Quick Start](http://phantomjs.org/quick-start.html)
+
+### Versions
+
+- chromessjs-2.1.1  将代码里边的phantom关键字全部替换成chromess
+- chromessjs-2.1.2-blacklist  增加url黑名单机制
+- chromessjs-2.1.3-js-proxy  增加js资源文件使用另外的代理代理IP
 
 
